@@ -32,7 +32,7 @@ function activate(context) {
 
                         switch (message.command) {
                             case 'alert':
-                                console.log(message.text);
+                                // console.log(message.text);
                                 currentPanel.webview.postMessage({ command: 'refactor' });
 
                                 return;
@@ -54,10 +54,29 @@ function activate(context) {
             }
         })
     );
+
+    /** @type {vscode.TextEditor | undefined} */
+    let editor = undefined;
+    let line = 0;
     
     context.subscriptions.push(
         vscode.commands.registerCommand('markdownDraw.editCurrentLine', () => {
-            if (currentPanel) currentPanel.webview.postMessage({ command: 'currentLine', content: String(Math.random()) });
+
+            let activeTextEditor = vscode.window.activeTextEditor;
+            if (activeTextEditor) {
+                editor = activeTextEditor;
+                line = editor.selection.active.line
+            }
+            if (!editor) {
+                vscode.window.showErrorMessage('No open text editor');
+                return; // No open text editor
+            }
+            
+            console.log(editor?.selection?.active?.line)
+            console.log(editor?.selection?.active?.line===line)
+            
+            let text = editor.document.getText(new vscode.Range(line, 0, line+1, 0))
+            if (currentPanel) currentPanel.webview.postMessage({ command: 'currentLine', content: text });
         })
     );
 

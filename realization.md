@@ -68,9 +68,12 @@ vscode.window.showTextDocument(vscode.Uri.file(path), options, editor => {
 
 ### 更换位置重新激活
 
-能实时跟随光标最好
+能实时跟随光标最好? 
 
-不能的话要用过快捷键和菜单掉命令来做
+A:似乎可以  
+通过`editor.selection.active.line`每100ms通信一次行号,同时作为editor是否还活着的信号?
+
+不能的话只能通过快捷键和菜单掉命令来做,每次都要触发一下
 
 ```json
 "keybindings": [
