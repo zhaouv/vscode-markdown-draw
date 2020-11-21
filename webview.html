@@ -45,6 +45,7 @@
         (function() {
             const vscode = acquireVsCodeApi();
             const counter = document.getElementById('lines-of-code-counter');
+            const lineContentInput = document.querySelector('input[type=text]');
 
             let count = 0;
             setInterval(() => {
@@ -62,8 +63,8 @@
             const sender = document.querySelector('input[type=button]')
             sender.onclick = function (params) {
                 vscode.postMessage({
-                    command: 'alert',
-                    text: 'auygefuaweygfug'
+                    command: 'editCurrentLine',
+                    text: lineContentInput.value
                 })
             }
         }())
