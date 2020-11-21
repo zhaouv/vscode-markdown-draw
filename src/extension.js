@@ -67,11 +67,13 @@ function activate(context) {
                 editor = activeTextEditor;
                 line = editor.selection.active.line
             }
-            if (!editor) {
+            if (!editor || editor.document.isClosed) {
                 vscode.window.showErrorMessage('No open text editor');
                 return; // No open text editor
             }
             
+            console.log(Math.random());
+            console.log(editor)
             console.log(editor?.selection?.active?.line)
             console.log(editor?.selection?.active?.line===line)
             
