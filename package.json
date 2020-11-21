@@ -24,10 +24,19 @@
 		"svg"
 	],
 	"activationEvents": [
+		"onCommand:markdownDraw.startDrawSVG",
 		"onLanguage:markdown"
 	],
-	"main": "./src/extension.js",
-	"contributes": {},
+	"main": "./src/extension",
+	"contributes": {
+		"commands": [
+			{
+				"command": "markdownDraw.startDrawSVG",
+				"title": "Markdown Draw Svg",
+				"category": "Markdown Draw"
+			}
+		]
+	},
 	"scripts": {},
 	"dependencies": {},
 	"devDependencies": {
