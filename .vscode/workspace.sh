@@ -1,0 +1,1 @@
+xdg-open "$(dirname "$0")"/../../../workspaces/drawsvg
