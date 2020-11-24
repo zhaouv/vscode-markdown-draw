@@ -13,6 +13,7 @@ function activate(context) {
     /** @type {vscode.TextEditor | undefined} */
     let currentEditor = undefined;
     let currentLine = 0;
+    let updateHandle = undefined;
 
     function createNewPanel() {
         vscode.commands.executeCommand('workbench.action.editorLayoutTwoRowsRight');
@@ -47,8 +48,15 @@ function activate(context) {
             undefined,
             context.subscriptions
         );
+
+        realTimeCurrentEditorUpdate()
+
         currentPanel.onDidDispose(
             () => {
+                if (updateHandle != undefined) {
+                    clearInterval(updateHandle)
+                    updateHandle = undefined
+                }
                 currentPanel = undefined;
             },
             undefined,
@@ -60,23 +68,70 @@ function activate(context) {
         currentPanel.reveal();
     }
 
-    function getEditorText() {
+    function getEditorText(show) {
+        let currentEditor_ = currentEditor
+        let currentLine_ = currentLine
         let activeTextEditor = vscode.window.activeTextEditor;
         if (activeTextEditor) {
-            currentEditor = activeTextEditor;
+            currentEditor_ = activeTextEditor;
         }
-        if (!currentEditor || currentEditor.document.isClosed) {
-            vscode.window.showErrorMessage('No open text editor');
-            return; // No open text editor
+        if (!currentEditor_ || currentEditor_.document.isClosed) {
+            if (show) vscode.window.showErrorMessage('No active line');
+            return {};
         }
-        currentLine = currentEditor.selection.active.line
+        currentLine_ = currentEditor_.selection.active.line
 
-        let text = currentEditor.document.getText(new vscode.Range(currentLine, 0, currentLine + 1, 0))
-        return text
+        let text = currentEditor_.document.getText(new vscode.Range(currentLine_, 0, currentLine_ + 1, 0))
+        return { text, currentEditor_, currentLine_ }
+    }
+
+    function pushCurrentLine() {
+        let { text, currentEditor_, currentLine_ } = getEditorText(true)
+        if (typeof text === 'string' && currentPanel) {
+            currentEditor = currentEditor_
+            currentLine = currentLine_
+            currentPanel.webview.postMessage({ command: 'currentLine', content: text });
+        }
+    }
+
+    function realTimeCurrentEditorUpdate() {
+        let strings = ['', '']
+        updateHandle = setInterval(() => {
+            let { text, currentEditor_, currentLine_ } = getEditorText(false)
+            if (typeof text === 'string' && currentPanel) {
+                let topush = false
+                if (strings[0] !== strings[1] && text === strings[0]) {
+                    topush = true
+                }
+                strings[1] = strings[0]
+                strings[0] = text
+                if (topush) {
+                    currentEditor = currentEditor_
+                    currentLine = currentLine_
+                    currentPanel.webview.postMessage({ command: 'currentLine', content: text });
+                }
+            }
+        }, 100)
     }
 
     function setEditorText(text) {
         console.log(text);
+        if (!currentEditor || currentEditor.document.isClosed) {
+            vscode.window.showErrorMessage('The text editor has been closed');
+            return;
+        }
+        currentEditor.edit(edit => {
+            let lf = '\n'
+            edit.replace(new vscode.Range(currentLine, 0, currentLine + 1, 0), text + lf);
+        })
+            .then(() => vscode.window.showTextDocument(currentEditor.document, {
+                viewColumn: currentEditor.viewColumn,
+                selection: new vscode.Range(currentLine + 1, 0, currentLine + 1, 0)
+            }))
+            .then(()=>{
+                pushCurrentLine()
+            })
+
     }
 
 
@@ -92,9 +147,7 @@ function activate(context) {
 
     context.subscriptions.push(
         vscode.commands.registerCommand('markdownDraw.editCurrentLine', () => {
-
-            let text = getEditorText()
-            if (currentPanel) currentPanel.webview.postMessage({ command: 'currentLine', content: text });
+            pushCurrentLine()
         })
     );
 
