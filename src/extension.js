@@ -2,6 +2,24 @@ const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
 
+function loadWebviewFiles(root) {
+  let main = fs.readFileSync(path.join(root, 'webview.html'), { encoding: 'utf8' })
+  main = main.replace(/<[^\n]*"\.\/board\/[^\n]*>/g, s => {
+    let m = /"\.\/board\/(.*?\.)(.*?)"/.exec(s)
+    let content = fs.readFileSync(path.join(root, 'board', m[1] + m[2]), { encoding: 'utf8' })
+    switch (m[2]) {
+      case 'css':
+        return '<style>' + content + '</style>'
+      case 'js':
+        return '<script>' + content + '</script>'
+      default:
+        return s
+    }
+  })
+  return main
+}
+const webviewContent = loadWebviewFiles(path.join(__dirname, '..'));
+
 /** @param {vscode.ExtensionContext} context */
 function activate(context) {
 
@@ -155,5 +173,5 @@ function activate(context) {
 exports.activate = activate;
 
 function getWebviewContent() {
-  return fs.readFileSync(path.join(__dirname, '..', 'webview.html'), { encoding: 'utf8' })
+  return webviewContent
 }
