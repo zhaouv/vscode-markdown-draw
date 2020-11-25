@@ -4,7 +4,7 @@
 	"description": "vscode-markdown-draw",
 	"version": "0.1.0",
 	"publisher": "zhaouv",
-	"license": "???",
+	"license": "Apache-2.0",
 	"repository": {
 		"url": "https://github.com/zhaouv/vscode-markdown-draw.git"
 	},
