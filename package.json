@@ -31,13 +31,8 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "markdownDraw.startDrawSVG",
-				"title": "Start Svg Drawing Page",
-				"category": "Markdown Draw"
-			},
-			{
-				"command": "markdownDraw.editCurrentLine",
-				"title": "Edit Current Line",
+				"command": "markdownDraw.editCurrentLineAsSVG",
+				"title": "Edit Current Line As SVG",
 				"category": "Markdown Draw"
 			}
 		]

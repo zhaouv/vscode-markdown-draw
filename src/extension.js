@@ -53,10 +53,8 @@ function activate(context) {
       message => {
 
         switch (message.command) {
-          case 'alert':
-            // console.log(message.text);
-            currentPanel.webview.postMessage({ command: 'refactor' });
-
+          case 'requestCurrentLine':
+            pushCurrentLine()
             return;
           case 'editCurrentLine':
             setEditorText(message.text);
@@ -152,19 +150,13 @@ function activate(context) {
 
   }
 
-
   context.subscriptions.push(
-    vscode.commands.registerCommand('markdownDraw.startDrawSVG', () => {
+    vscode.commands.registerCommand('markdownDraw.editCurrentLineAsSVG', () => {
       if (currentPanel) {
         showPanel()
       } else {
         createNewPanel()
       }
-    })
-  );
-
-  context.subscriptions.push(
-    vscode.commands.registerCommand('markdownDraw.editCurrentLine', () => {
       pushCurrentLine()
     })
   );
