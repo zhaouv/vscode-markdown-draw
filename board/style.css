@@ -101,9 +101,9 @@ select {
 }
 
 .svg-container {
-  float: left;
+  /* float: left; */
   height: 500px;
-  width: 70%;
+  /* width: 70%; */
 }
 
 #svg {
@@ -118,10 +118,10 @@ select {
 
 .svg-button {
   border: 1.5px solid #6190e8;
-  border-left: none;
-  float: left;
-  height: 500px;
-  width: 30%;
+  /* border-left: none; */
+  /* float: left; */
+  height: 85px;
+  /* width: 30%; */
   padding: 6px 16px;
   box-sizing: border-box;
   user-select: none;

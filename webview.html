@@ -17,11 +17,9 @@
   <input type="button" value="change">
   <br>
   <div class="container">
-    <div class="svg-container">
-      <svg id="svg"></svg>
-    </div>
+    
     <div class="svg-button">
-      <h3>画笔</h3>
+      <!-- <h3>画笔</h3> -->
       <div class="svg-pen">
         <div class="svg-btn fa fa-pencil-alt" data-type="pen">
           <span> 画笔</span>
@@ -36,8 +34,8 @@
           <span> 选择</span>
         </div>
       </div>
-      <h3>画笔颜色</h3>
-      <div class="svg-color">
+      <!-- <h3>画笔颜色</h3> -->
+      <div class="svg-color" style="display: none;">
         <select id="select-color">
           <option value="black">黑色</option>
           <option value="lightcoral">红色</option>
@@ -52,8 +50,8 @@
         </select>
         <input type="color" id="custom-color" />
       </div>
-      <h3>画笔大小</h3>
-      <div class="svg-size">
+      <!-- <h3>画笔大小</h3> -->
+      <div class="svg-size" style="display: none;">
         <select id="select-size">
           <option value="small">小</option>
           <option value="middle">中</option>
@@ -62,8 +60,8 @@
         </select>
         <input type="number" id="custom-size" value="2" />
       </div>
-      <h3>填充颜色</h3>
-      <div class="svg-fill-color">
+      <!-- <h3>填充颜色</h3> -->
+      <div class="svg-fill-color" style="display: none;">
         <select id="select-fill-color">
           <option value="none">不填充</option>
           <option value="black">黑色</option>
@@ -79,11 +77,11 @@
         </select>
         <input type="color" id="custom-fill-color" />
       </div>
-      <h3>文字大小</h3>
-      <div class="svg-text-size">
+      <!-- <h3>文字大小</h3> -->
+      <div class="svg-text-size" style="display: none;">
         <input type="number" id="text-size" value="14" />
       </div>
-      <h3>形状</h3>
+      <!-- <h3>形状</h3> -->
       <div class="svg-shape">
         <div class="svg-btn fa fa-slash" data-type="line">
           <span> 直线</span>
@@ -107,7 +105,7 @@
           <span> 菱形</span>
         </div>
       </div>
-      <h3>操作</h3>
+      <!-- <h3>操作</h3> -->
       <div class="svg-operate">
         <div class="svg-btn fa fa-reply" id="svg-undo">
           <span> 撤销</span>
@@ -119,13 +117,16 @@
           <span> 清空画板</span>
         </div>
       </div>
-      <h3>生成图像</h3>
+      <!-- <h3>生成图像</h3> -->
       <div class="svg-output">
         <div class="svg-btn fa fa-asterisk" title="change and stay"><span></span></div>
         <div class="svg-btn fa fa-arrow-down" id="svg-get" title="change and next line"><span></span></div>
       </div>
     </div>
-    <div id="images"></div>
+    <div class="svg-container">
+      <svg id="svg"></svg>
+    </div>
+    <div id="images" style="display: none;"></div>
   </div>
   <script src="./board/path-int.js"></script>
   <script src="./board/main.js"></script>
@@ -155,7 +156,7 @@
       const vscode = acquireVsCodeApi();
       const lineContentInput = document.querySelector('input[type=text]');
       const sender = document.querySelector('input[type=button]')
-      sender.onclick = function (params) {
+      sender.onclick = function () {
         vscode.postMessage({
           command: 'editCurrentLine',
           text: lineContentInput.value

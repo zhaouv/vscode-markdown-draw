@@ -1179,6 +1179,7 @@ function initPaint(svgId, conf = null) {
     document.querySelector("#images").append(textarea);
 
     document.querySelector('input[type=text]').value = textarea.value
+    document.querySelector('input[type=button]').onclick()
   });
 }
 
