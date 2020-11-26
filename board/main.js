@@ -133,6 +133,17 @@ function initPaint(svgId, conf = null) {
   };
 
   var drawDown = e => {
+    // todo 也修改界面的显示
+    if (e.buttons === 32) {
+      config.type = "eraser";
+    }
+    if (
+      e.pointerType === "pen" &&
+      config.type === "eraser" &&
+      e.buttons === 1
+    ) {
+      config.type = "pen";
+    }
     drawMoveOpen = true;
     let { x, y } = getPoint(e.clientX, e.clientY);
     if (e.target.getAttributeNS(null, "data-resize")) {
