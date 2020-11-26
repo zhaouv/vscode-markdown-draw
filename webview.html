@@ -7,6 +7,7 @@
     https://github.com/syfxlin/graffiti-board/blob/5945b126c945073eced5e6eb78658bc2a7375881/index.html
   -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./board/Font-Awesome-5-8-2-all-min.css" />
   <link rel="stylesheet" href="./board/style.css" />
   <title>Draw Note</title>
 </head>
@@ -31,7 +32,7 @@
         <div class="svg-btn fa fa-font" data-type="text">
           <span> 文本</span>
         </div>
-        <div class="svg-btn fa fa-pencil-alt" data-type="select">
+        <div class="svg-btn fa fa-pencil-ruler" data-type="select">
           <span> 选择</span>
         </div>
       </div>
@@ -99,7 +100,7 @@
         <div class="svg-btn fa fa-circle" data-type="circle">
           <span> 圆形</span>
         </div>
-        <div class="svg-btn fa fa-circle" data-type="ellipse">
+        <div class="svg-btn fa fa-hockey-puck" data-type="ellipse">
           <span> 椭圆</span>
         </div>
         <div class="svg-btn fa fa-layer-group" data-type="diamond">
@@ -120,7 +121,8 @@
       </div>
       <h3>生成图像</h3>
       <div class="svg-output">
-        <div class="svg-btn" id="svg-get">取得SVG</div>
+        <div class="svg-btn fa fa-asterisk" title="change and stay"><span></span></div>
+        <div class="svg-btn fa fa-arrow-down" id="svg-get" title="change and next line"><span></span></div>
       </div>
     </div>
     <div id="images"></div>
