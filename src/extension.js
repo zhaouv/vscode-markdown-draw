@@ -136,18 +136,24 @@ function activate(context) {
       vscode.window.showErrorMessage('The text editor has been closed');
       return;
     }
-    currentEditor.edit(edit => {
-      let lf = '\n'
-      edit.replace(new vscode.Range(currentLine, 0, currentLine + 1, 0), text + lf);
+    vscode.window.showTextDocument(currentEditor.document, {
+      viewColumn: currentEditor.viewColumn,
+      selection: new vscode.Range(currentLine, 0, currentLine, 0)
     })
+      .then((editor) => editor.edit(edit => {
+        let lf = '\n'
+        edit.replace(new vscode.Range(currentLine, 0, currentLine + 1, 0), text + lf);
+      }))
       .then(() => vscode.window.showTextDocument(currentEditor.document, {
         viewColumn: currentEditor.viewColumn,
         selection: new vscode.Range(currentLine + 1, 0, currentLine + 1, 0)
-      }))
+      })) // the next line somehow not working, so use this line
+      // .then(() => currentEditor.revealRange(
+      //   new vscode.Range(currentLine + 1, 0, currentLine + 1, 0)
+      // )) 
       .then(() => {
         pushCurrentLine()
       })
-
   }
 
   context.subscriptions.push(

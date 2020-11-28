@@ -80,8 +80,7 @@ select {
   left: 50%;
   transform: translateX(-50%);
   position: relative;
-  width: 1080px;
-  max-width: 96%;
+  width: 99vw;
 }
 
 .title h1 {
@@ -102,7 +101,7 @@ select {
 
 .svg-container {
   /* float: left; */
-  height: 500px;
+  height: calc(99vh - 35px - 110px);
   /* width: 70%; */
 }
 
@@ -120,7 +119,7 @@ select {
   border: 1.5px solid #6190e8;
   /* border-left: none; */
   /* float: left; */
-  height: 85px;
+  height: 35px;
   /* width: 30%; */
   padding: 6px 16px;
   box-sizing: border-box;
@@ -134,9 +133,14 @@ select {
 }
 
 .svg-button > div {
+  display: inline;
   list-style: none;
   margin: 0px;
   padding: 0px;
+}
+
+.svgiconspliter {
+  margin-right: 25px;
 }
 
 .svg-button > div div {
