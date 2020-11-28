@@ -62,6 +62,9 @@
       </div>
       <span class="svgiconspliter"></span>
       <div class="svg-operate">
+        <div class="svg-btn fa fa-sliders-h" id="svg-showsettings" title="settings (unfinished now)">
+          <span></span>
+        </div>
         <div class="svg-btn fa fa-reply" id="svg-undo" title="undo">
           <span></span>
         </div>
@@ -75,63 +78,62 @@
         <div class="svg-btn fa fa-arrow-down" title="go next line (unfinished now)">
           <span></span>
         </div>
-        <div class="svg-btn fa fa-save" title="change and stay (unfinished now)">
+        <div class="svg-btn fa fa-check-square" title="change and stay (unfinished now)">
           <span></span>
         </div>
-        <div class="svg-btn fa fa-download" id="svg-get" title="change and go next line">
+        <div class="svg-btn fa fa-caret-square-down" id="svg-get" title="change and go next line">
           <span></span>
         </div>
       </div>
-      <div>
-        <h3>画笔大小</h3>
-        <div class="svg-size">
-          <select id="select-size">
-            <option value="small">小</option>
-            <option value="middle">中</option>
-            <option value="big">大</option>
-            <option value="custom">自定义</option>
-          </select>
-          <input type="number" id="custom-size" value="2" />
-        </div>
-        <h3>画笔颜色</h3>
-        <div class="svg-color">
-          <select id="select-color">
-            <option value="black">黑色</option>
-            <option value="lightcoral">红色</option>
-            <option value="lightblue" selected>蓝色</option>
-            <option value="lightgreen">绿色</option>
-            <option value="lightyellow">黄色</option>
-            <option value="lightsalmon">橙色</option>
-            <option value="lightgray">灰色</option>
-            <option value="lightpink">粉色</option>
-            <option value="plum">紫色</option>
-            <option value="custom">自定义</option>
-          </select>
-          <input type="color" id="custom-color" />
-        </div>
-        <h3>填充颜色</h3>
-        <div class="svg-fill-color">
-          <select id="select-fill-color">
-            <option value="none">不填充</option>
-            <option value="black">黑色</option>
-            <option value="lightcoral">红色</option>
-            <option value="lightblue">蓝色</option>
-            <option value="lightgreen">绿色</option>
-            <option value="lightyellow">黄色</option>
-            <option value="lightsalmon">橙色</option>
-            <option value="lightgray">灰色</option>
-            <option value="lightpink">粉色</option>
-            <option value="plum">紫色</option>
-            <option value="custom">自定义</option>
-          </select>
-          <input type="color" id="custom-fill-color" />
-        </div>
-        <h3>文字大小</h3>
-        <div class="svg-text-size">
-          <input type="number" id="text-size" value="14" />
-        </div>
+    </div>
+    <div class="svg-settings" style="display: none;">
+      <h3>size</h3>
+      <div class="svg-size">
+        <select id="select-size">
+          <option value="small">small</option>
+          <option value="middle">middle</option>
+          <option value="big">big</option>
+          <option value="custom">custom</option>
+        </select>
+        <input type="number" id="custom-size" value="2" />
       </div>
-
+      <h3>color</h3>
+      <div class="svg-color">
+        <select id="select-color">
+          <option value="black">黑色</option>
+          <option value="lightcoral">红色</option>
+          <option value="lightblue" selected>蓝色</option>
+          <option value="lightgreen">绿色</option>
+          <option value="lightyellow">黄色</option>
+          <option value="lightsalmon">橙色</option>
+          <option value="lightgray">灰色</option>
+          <option value="lightpink">粉色</option>
+          <option value="plum">紫色</option>
+          <option value="custom">自定义</option>
+        </select>
+        <input type="color" id="custom-color" />
+      </div>
+      <h3>fill</h3>
+      <div class="svg-fill-color">
+        <select id="select-fill-color">
+          <option value="none">不填充</option>
+          <option value="black">黑色</option>
+          <option value="lightcoral">红色</option>
+          <option value="lightblue">蓝色</option>
+          <option value="lightgreen">绿色</option>
+          <option value="lightyellow">黄色</option>
+          <option value="lightsalmon">橙色</option>
+          <option value="lightgray">灰色</option>
+          <option value="lightpink">粉色</option>
+          <option value="plum">紫色</option>
+          <option value="custom">自定义</option>
+        </select>
+        <input type="color" id="custom-fill-color" />
+      </div>
+      <h3>text size</h3>
+      <div class="svg-text-size">
+        <input type="number" id="text-size" value="14" />
+      </div>
     </div>
     <div class="svg-container">
       <svg id="svg"></svg>

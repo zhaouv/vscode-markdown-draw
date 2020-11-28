@@ -1182,6 +1182,17 @@ function initPaint(svgId, conf = null) {
     svg.innerHTML = "";
   });
 
+  document.querySelector("#svg-showsettings").addEventListener("click", e => {
+    let settings = document.querySelector('.svg-settings');
+    if (settings.style.display==='none') {
+      settings.style.display=''
+      document.querySelector("#svg-showsettings").classList.add("active");
+    } else {
+      settings.style.display='none'
+      document.querySelector("#svg-showsettings").classList.remove("active");
+    }
+  });
+
   document.querySelector("#svg-get").addEventListener("click", e => {
     let textarea = document.createElement("textarea");
     let {x,y,width,height} = svg.getBBox();
