@@ -131,7 +131,7 @@ function activate(context) {
   }
 
   function setEditorText(text) {
-    console.log(text);
+    console.log(text.slice(0,30));
     if (!currentEditor || currentEditor.document.isClosed) {
       vscode.window.showErrorMessage('The text editor has been closed');
       return;

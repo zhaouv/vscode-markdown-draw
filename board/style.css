@@ -127,6 +127,15 @@ select {
   overflow-y: auto;
 }
 
+@media (max-width: 576px) {
+  .svg-container {
+    height: calc(99vh - 51px - 110px);
+  }
+  .svg-button {
+    height: 51px;
+  }
+}
+
 .svg-button h3 {
   margin-top: 10px;
   margin-bottom: 5px;
