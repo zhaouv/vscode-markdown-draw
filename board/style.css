@@ -127,7 +127,7 @@ select {
   overflow-y: auto;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 587px) {
   .svg-container {
     height: calc(99vh - 51px - 110px);
   }
