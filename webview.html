@@ -21,7 +21,7 @@
     <input type="button" value="change-nextline" id="text-change-nextline">
   </div>
 
-  <div class="container">
+  <div><div class="container">
 
     <div class="svg-button">
 
@@ -143,16 +143,27 @@
     </div>
     <div id="images" style="display: none;"></div>
 
-  </div>
+  </div></div>
   <script src="./board/path-int.js"></script>
   <script src="./board/main.js"></script>
 
   <script>
 
     const lineContentInput = document.querySelector('input[type=text]');
+    
 
     function setContent(message) {
       lineContentInput.value = message.content;
+      // 不准确且不安全的检查, 先这么写
+      if (message.content.startsWith('<svg id="svg"')) {
+        var svg = document.getElementById('svg');
+        var div_container = document.querySelector('div.container')
+        svg.outerHTML = message.content.replace(/viewbox=["'][^"']+["']/,'')
+        // 代价很大, 临时先这么写
+        div_container.outerHTML = div_container.outerHTML
+        window.paints = []
+        initPaint("svg");
+      }
     }
 
     // Handle the message inside the webview
@@ -172,26 +183,26 @@
       const vscode = acquireVsCodeApi();
       const lineContentInput = document.querySelector('input[type=text]');
       document.querySelector('#text-nextline').onclick = function () {
-          vscode.postMessage({
-            command: 'editCurrentLine',
-            control: 'nextline',
-            text: lineContentInput.value
-          })
-        }
+        vscode.postMessage({
+          command: 'editCurrentLine',
+          control: 'nextline',
+          text: lineContentInput.value
+        })
+      }
       document.querySelector('#text-change-stay').onclick = function () {
-          vscode.postMessage({
-            command: 'editCurrentLine',
-            control: 'stay',
-            text: lineContentInput.value
-          })
-        }
+        vscode.postMessage({
+          command: 'editCurrentLine',
+          control: 'stay',
+          text: lineContentInput.value
+        })
+      }
       document.querySelector('#text-change-nextline').onclick = function () {
-          vscode.postMessage({
-            command: 'editCurrentLine',
-            control: 'nextline',
-            text: lineContentInput.value
-          })
-        }
+        vscode.postMessage({
+          command: 'editCurrentLine',
+          control: 'nextline',
+          text: lineContentInput.value
+        })
+      }
       vscode.postMessage({ command: 'requestCurrentLine' })
     }())
   </script>
