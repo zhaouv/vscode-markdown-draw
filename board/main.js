@@ -1201,9 +1201,9 @@ function initPaint(svgId, conf = null) {
       let textarea = document.createElement("textarea");
       let {x,y,width,height} = svg.getBBox();
       textarea.value = svg.outerHTML.replace('<svg id="svg">',
-      `<svg id="svg" viewbox="${x-10},${y-10},${width+20},${height+20}">`);
+      `<svg id="svg" viewbox="${x-10},${y-10},${width+20},${height+20}" style="height:${height+20}">`);
       document.querySelector("#images").append(textarea);
-      document.querySelector('input[type=text]').value = textarea.value
+      document.querySelector('input[type=text]').value = textarea.value+'  '
       document.querySelector('#text-'+s).onclick()
     });
   })

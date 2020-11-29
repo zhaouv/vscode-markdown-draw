@@ -21,136 +21,137 @@
     <input type="button" value="change-nextline" id="text-change-nextline">
   </div>
 
-  <div><div class="container">
+  <div>
+    <div class="container">
 
-    <div class="svg-button">
+      <div class="svg-button">
 
-      <div class="svg-pen">
-        <div class="svg-btn fa fa-pencil-alt" data-type="pen" title="pen">
-          <span></span>
-        </div>
-        <div class="svg-btn fa fa-eraser" data-type="eraser" title="eraser">
-          <span></span>
-        </div>
-        <div class="svg-btn fa fa-font" data-type="text" title="text">
-          <span></span>
-        </div>
-        <div class="svg-btn fa fa-pencil-ruler" data-type="select" title="select">
-          <span></span>
-        </div>
-      </div>
-      <span class="svgiconspliter"></span>
-      <div class="svg-shape">
-        <div class="svg-btn fa fa-slash" data-type="line" title="line">
-          <span></span>
-        </div>
-        <div class="svg-btn fa fa-draw-polygon" data-type="polygon" title="polygon">
-          <span></span>
-        </div>
-        <div class="svg-btn fa fa-square-full" data-type="rect" title="rect">
-          <span></span>
-        </div>
-        <div class="svg-btn fa fa-square" data-type="round-rect" title="round-rect">
-          <span></span>
-        </div>
-        <div class="svg-btn fa fa-circle" data-type="circle" title="circle">
-          <span></span>
-        </div>
-        <div class="svg-btn fa fa-hockey-puck" data-type="ellipse" title="ellipse">
-          <span></span>
-        </div>
-        <div class="svg-btn fa fa-layer-group" data-type="diamond" title="diamond">
-          <span></span>
-        </div>
-      </div>
-      <span class="svgiconspliter"></span>
-      <div class="svg-operate">
-        <div class="svg-btn fa fa-sliders-h" id="svg-showsettings" title="settings (unfinished now)">
-          <span></span>
-        </div>
-        <div class="svg-btn fa fa-reply" id="svg-undo" title="undo">
-          <span></span>
-        </div>
-        <div class="svg-btn fa fa-share" id="svg-redo" title="redo">
-          <span></span>
-        </div>
-        <div class="svg-btn fa fa-trash" id="svg-clean" title="clear board">
-          <span></span>
+        <div class="svg-pen">
+          <div class="svg-btn fa fa-pencil-alt" data-type="pen" title="pen">
+            <span></span>
+          </div>
+          <div class="svg-btn fa fa-eraser" data-type="eraser" title="eraser">
+            <span></span>
+          </div>
+          <div class="svg-btn fa fa-font" data-type="text" title="text">
+            <span></span>
+          </div>
+          <div class="svg-btn fa fa-pencil-ruler" data-type="select" title="select">
+            <span></span>
+          </div>
         </div>
         <span class="svgiconspliter"></span>
-        <div class="svg-btn fa fa-arrow-down" id="svg-nextline" title="go next line">
-          <span></span>
+        <div class="svg-shape">
+          <div class="svg-btn fa fa-slash" data-type="line" title="line">
+            <span></span>
+          </div>
+          <div class="svg-btn fa fa-draw-polygon" data-type="polygon" title="polygon">
+            <span></span>
+          </div>
+          <div class="svg-btn fa fa-square-full" data-type="rect" title="rect">
+            <span></span>
+          </div>
+          <div class="svg-btn fa fa-square" data-type="round-rect" title="round-rect">
+            <span></span>
+          </div>
+          <div class="svg-btn fa fa-circle" data-type="circle" title="circle">
+            <span></span>
+          </div>
+          <div class="svg-btn fa fa-hockey-puck" data-type="ellipse" title="ellipse">
+            <span></span>
+          </div>
+          <div class="svg-btn fa fa-layer-group" data-type="diamond" title="diamond">
+            <span></span>
+          </div>
         </div>
-        <div class="svg-btn fa fa-check-square" id="svg-change-stay" title="change and stay">
-          <span></span>
+        <span class="svgiconspliter"></span>
+        <div class="svg-operate">
+          <div class="svg-btn fa fa-sliders-h" id="svg-showsettings" title="settings (unfinished now)">
+            <span></span>
+          </div>
+          <div class="svg-btn fa fa-reply" id="svg-undo" title="undo">
+            <span></span>
+          </div>
+          <div class="svg-btn fa fa-share" id="svg-redo" title="redo">
+            <span></span>
+          </div>
+          <div class="svg-btn fa fa-trash" id="svg-clean" title="clear board">
+            <span></span>
+          </div>
+          <span class="svgiconspliter"></span>
+          <div class="svg-btn fa fa-arrow-down" id="svg-nextline" title="go next line">
+            <span></span>
+          </div>
+          <div class="svg-btn fa fa-check-square" id="svg-change-stay" title="change and stay">
+            <span></span>
+          </div>
+          <div class="svg-btn fa fa-caret-square-down" id="svg-change-nextline" title="change and go next line">
+            <span></span>
+          </div>
         </div>
-        <div class="svg-btn fa fa-caret-square-down" id="svg-change-nextline" title="change and go next line">
-          <span></span>
+      </div>
+      <div class="svg-settings" style="display: none;">
+        <h3>size</h3>
+        <div class="svg-size">
+          <select id="select-size">
+            <option value="small">small</option>
+            <option value="middle">middle</option>
+            <option value="big">big</option>
+            <option value="custom">custom</option>
+          </select>
+          <input type="number" id="custom-size" value="2" />
+        </div>
+        <h3>color</h3>
+        <div class="svg-color">
+          <select id="select-color">
+            <option value="black">黑色</option>
+            <option value="lightcoral">红色</option>
+            <option value="lightblue" selected>蓝色</option>
+            <option value="lightgreen">绿色</option>
+            <option value="lightyellow">黄色</option>
+            <option value="lightsalmon">橙色</option>
+            <option value="lightgray">灰色</option>
+            <option value="lightpink">粉色</option>
+            <option value="plum">紫色</option>
+            <option value="custom">自定义</option>
+          </select>
+          <input type="color" id="custom-color" />
+        </div>
+        <h3>fill</h3>
+        <div class="svg-fill-color">
+          <select id="select-fill-color">
+            <option value="none">不填充</option>
+            <option value="black">黑色</option>
+            <option value="lightcoral">红色</option>
+            <option value="lightblue">蓝色</option>
+            <option value="lightgreen">绿色</option>
+            <option value="lightyellow">黄色</option>
+            <option value="lightsalmon">橙色</option>
+            <option value="lightgray">灰色</option>
+            <option value="lightpink">粉色</option>
+            <option value="plum">紫色</option>
+            <option value="custom">自定义</option>
+          </select>
+          <input type="color" id="custom-fill-color" />
+        </div>
+        <h3>text size</h3>
+        <div class="svg-text-size">
+          <input type="number" id="text-size" value="14" />
         </div>
       </div>
-    </div>
-    <div class="svg-settings" style="display: none;">
-      <h3>size</h3>
-      <div class="svg-size">
-        <select id="select-size">
-          <option value="small">small</option>
-          <option value="middle">middle</option>
-          <option value="big">big</option>
-          <option value="custom">custom</option>
-        </select>
-        <input type="number" id="custom-size" value="2" />
+      <div class="svg-container">
+        <svg id="svg"></svg>
       </div>
-      <h3>color</h3>
-      <div class="svg-color">
-        <select id="select-color">
-          <option value="black">黑色</option>
-          <option value="lightcoral">红色</option>
-          <option value="lightblue" selected>蓝色</option>
-          <option value="lightgreen">绿色</option>
-          <option value="lightyellow">黄色</option>
-          <option value="lightsalmon">橙色</option>
-          <option value="lightgray">灰色</option>
-          <option value="lightpink">粉色</option>
-          <option value="plum">紫色</option>
-          <option value="custom">自定义</option>
-        </select>
-        <input type="color" id="custom-color" />
-      </div>
-      <h3>fill</h3>
-      <div class="svg-fill-color">
-        <select id="select-fill-color">
-          <option value="none">不填充</option>
-          <option value="black">黑色</option>
-          <option value="lightcoral">红色</option>
-          <option value="lightblue">蓝色</option>
-          <option value="lightgreen">绿色</option>
-          <option value="lightyellow">黄色</option>
-          <option value="lightsalmon">橙色</option>
-          <option value="lightgray">灰色</option>
-          <option value="lightpink">粉色</option>
-          <option value="plum">紫色</option>
-          <option value="custom">自定义</option>
-        </select>
-        <input type="color" id="custom-fill-color" />
-      </div>
-      <h3>text size</h3>
-      <div class="svg-text-size">
-        <input type="number" id="text-size" value="14" />
-      </div>
-    </div>
-    <div class="svg-container">
-      <svg id="svg"></svg>
-    </div>
-    <div id="images" style="display: none;"></div>
+      <div id="images" style="display: none;"></div>
 
-  </div></div>
+    </div>
+  </div>
   <script src="./board/path-int.js"></script>
   <script src="./board/main.js"></script>
 
   <script>
 
     const lineContentInput = document.querySelector('input[type=text]');
-    
 
     function setContent(message) {
       lineContentInput.value = message.content;
@@ -158,8 +159,9 @@
       var div_container = document.querySelector('div.container')
       // 不准确且不安全的检查, 先这么写
       if (message.content.startsWith('<svg id="svg"')) {
-        svg.outerHTML = message.content.replace(/viewbox=["'][^"']+["']/,'')
-      }else{
+        svg.outerHTML = message.content
+          .replace(/<svg id="svg" (?:viewbox|style)=["'][^>]+["']/, '<svg id="svg"')
+      } else {
         svg.outerHTML = '<svg id="svg"></svg>'
       }
       // 代价很大, 临时先这么写

@@ -1,8 +1,8 @@
 {
 	"name": "vscode-markdown-draw",
 	"displayName": "Draw Note",
-	"description": "vscode-markdown-draw",
-	"version": "0.1.0",
+	"description": "Draw svg quick-responsively with a mouse or pen, designed for note-taking, formulas drafting. [Prototype stage now!]",
+	"version": "0.1.1",
 	"publisher": "zhaouv",
 	"license": "Apache-2.0",
 	"repository": {
@@ -24,7 +24,7 @@
 		"svg"
 	],
 	"activationEvents": [
-		"onCommand:markdownDraw.startDrawSVG",
+		"onCommand:markdownDraw.editCurrentLineAsSVG",
 		"onLanguage:markdown"
 	],
 	"main": "./src/extension",
