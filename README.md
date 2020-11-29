@@ -2,7 +2,10 @@
 
 **This project is in the prototype stage !**
 
-[Design](Design.md)
+## Goals
+
+Draw svg quick-responsively with a mouse or pen,  
+Mainly used for note-taking, formulas drafting
 
 ## License
 
