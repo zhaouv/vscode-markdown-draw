@@ -154,16 +154,18 @@
 
     function setContent(message) {
       lineContentInput.value = message.content;
+      var svg = document.getElementById('svg');
+      var div_container = document.querySelector('div.container')
       // 不准确且不安全的检查, 先这么写
       if (message.content.startsWith('<svg id="svg"')) {
-        var svg = document.getElementById('svg');
-        var div_container = document.querySelector('div.container')
         svg.outerHTML = message.content.replace(/viewbox=["'][^"']+["']/,'')
-        // 代价很大, 临时先这么写
-        div_container.outerHTML = div_container.outerHTML
-        window.paints = []
-        initPaint("svg");
+      }else{
+        svg.outerHTML = '<svg id="svg"></svg>'
       }
+      // 代价很大, 临时先这么写
+      div_container.outerHTML = div_container.outerHTML
+      window.paints = []
+      initPaint("svg");
     }
 
     // Handle the message inside the webview

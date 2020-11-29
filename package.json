@@ -32,10 +32,19 @@
 		"commands": [
 			{
 				"command": "markdownDraw.editCurrentLineAsSVG",
-				"title": "Edit Current Line As SVG",
+				"title": "Edit/Create current line as SVG",
 				"category": "Markdown Draw"
 			}
-		]
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"command": "markdownDraw.editCurrentLineAsSVG",
+					"when": "editorFocus",
+					"group": "7_modification" 
+				}
+			]
+		}
 	},
 	"scripts": {},
 	"dependencies": {},
