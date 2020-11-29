@@ -34,12 +34,11 @@ function activate(context) {
   let updateHandle = undefined;
 
   function createNewPanel() {
-    vscode.commands.executeCommand('workbench.action.editorLayoutTwoRowsRight');
     // Create and show panel
     currentPanel = vscode.window.createWebviewPanel(
       'drawNote',
       'Draw Note',
-      vscode.ViewColumn.Two,
+      vscode.ViewColumn.Three,
       {
         // Enable scripts in the webview
         // 实际上，您的Web视图应始终使用内容安全策略禁用内联脚本
@@ -131,7 +130,7 @@ function activate(context) {
   }
 
   function setEditorText(text) {
-    console.log(text.slice(0,30));
+    console.log(text.slice(0, 30));
     if (!currentEditor || currentEditor.document.isClosed) {
       vscode.window.showErrorMessage('The text editor has been closed');
       return;
@@ -160,10 +159,14 @@ function activate(context) {
     vscode.commands.registerCommand('markdownDraw.editCurrentLineAsSVG', () => {
       if (currentPanel) {
         showPanel()
+        pushCurrentLine()
       } else {
-        createNewPanel()
+        vscode.commands.executeCommand('workbench.action.editorLayoutTwoRowsRight')
+          .then(() => {
+            createNewPanel()
+            pushCurrentLine()
+          })
       }
-      pushCurrentLine()
     })
   );
 
