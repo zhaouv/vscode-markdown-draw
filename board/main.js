@@ -1193,16 +1193,20 @@ function initPaint(svgId, conf = null) {
     }
   });
 
-  document.querySelector("#svg-get").addEventListener("click", e => {
-    let textarea = document.createElement("textarea");
-    let {x,y,width,height} = svg.getBBox();
-    textarea.value = svg.outerHTML.replace('<svg id="svg">',
-    `<svg id="svg" viewbox="${x-10},${y-10},${width+20},${height+20}">`);
-    document.querySelector("#images").append(textarea);
-
-    document.querySelector('input[type=text]').value = textarea.value
-    document.querySelector('input[type=button]').onclick()
+  document.querySelector("#svg-nextline").addEventListener("click", e => {
+    document.querySelector('#text-change-nextline').onclick()
   });
+  (['change-stay','change-nextline']).forEach(s=>{
+    document.querySelector("#svg-"+s).addEventListener("click", e => {
+      let textarea = document.createElement("textarea");
+      let {x,y,width,height} = svg.getBBox();
+      textarea.value = svg.outerHTML.replace('<svg id="svg">',
+      `<svg id="svg" viewbox="${x-10},${y-10},${width+20},${height+20}">`);
+      document.querySelector("#images").append(textarea);
+      document.querySelector('input[type=text]').value = textarea.value
+      document.querySelector('#text-'+s).onclick()
+    });
+  })
 }
 
 initPaint("svg");

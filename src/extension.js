@@ -56,7 +56,7 @@ function activate(context) {
             pushCurrentLine()
             return;
           case 'editCurrentLine':
-            setEditorText(message.text);
+            setEditorText(message.text, message.control);
             return;
         }
       },
@@ -129,13 +129,13 @@ function activate(context) {
     }, 100)
   }
 
-  function setEditorText(text) {
-    console.log(text.slice(0, 30));
+  function setEditorText(text, control) {
+    console.log(text.slice(0, 30), control);
     if (!currentEditor || currentEditor.document.isClosed) {
       vscode.window.showErrorMessage('The text editor has been closed');
       return;
     }
-    vscode.window.showTextDocument(currentEditor.document, {
+    let p = vscode.window.showTextDocument(currentEditor.document, {
       viewColumn: currentEditor.viewColumn,
       selection: new vscode.Range(currentLine, 0, currentLine, 0)
     })
@@ -143,16 +143,19 @@ function activate(context) {
         let lf = '\n'
         edit.replace(new vscode.Range(currentLine, 0, currentLine + 1, 0), text + lf);
       }))
-      .then(() => vscode.window.showTextDocument(currentEditor.document, {
-        viewColumn: currentEditor.viewColumn,
-        selection: new vscode.Range(currentLine + 1, 0, currentLine + 1, 0)
-      })) // the next line somehow not working, so use this line
-      // .then(() => currentEditor.revealRange(
-      //   new vscode.Range(currentLine + 1, 0, currentLine + 1, 0)
-      // )) 
-      .then(() => {
-        pushCurrentLine()
-      })
+    if (control === 'nextline') {
+      p = p
+        .then(() => vscode.window.showTextDocument(currentEditor.document, {
+          viewColumn: currentEditor.viewColumn,
+          selection: new vscode.Range(currentLine + 1, 0, currentLine + 1, 0)
+        })) // the next line somehow not working, so use this line
+        // .then(() => currentEditor.revealRange(
+        //   new vscode.Range(currentLine + 1, 0, currentLine + 1, 0)
+        // )) 
+        .then(() => {
+          pushCurrentLine()
+        })
+    }
   }
 
   context.subscriptions.push(
