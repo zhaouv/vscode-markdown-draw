@@ -1,5 +1,9 @@
 # Change Log
 
+## appending
+
+CSP script nonce
+
 ## 0.1.1 (2020-11-29)
 
 Initial Release

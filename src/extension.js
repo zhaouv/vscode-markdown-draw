@@ -25,7 +25,7 @@ function loadWebviewFiles(root) {
         return s
     }
   })
-  main=main.replace(/ToBeReplacedByRandomToken/g,getNonce())
+  main = main.replace(/ToBeReplacedByRandomToken/g, getNonce())
   return main
 }
 const webviewContent = loadWebviewFiles(path.join(__dirname, '..'));
@@ -51,7 +51,6 @@ function activate(context) {
       vscode.ViewColumn.Three,
       {
         // Enable scripts in the webview
-        // 实际上，您的Web视图应始终使用内容安全策略禁用内联脚本
         enableScripts: true
       }
     );

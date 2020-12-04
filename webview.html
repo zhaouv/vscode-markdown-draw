@@ -149,69 +149,7 @@
   </div>
   <script nonce="ToBeReplacedByRandomToken" src="./board/path-int.js"></script>
   <script nonce="ToBeReplacedByRandomToken" src="./board/main.js"></script>
-
-  <script nonce="ToBeReplacedByRandomToken">
-
-    const lineContentInput = document.querySelector('input[type=text]');
-
-    function setContent(message) {
-      lineContentInput.value = message.content;
-      var svg = document.getElementById('svg');
-      var div_container = document.querySelector('div.container')
-      // 不准确且不安全的检查, 先这么写
-      if (message.content.startsWith('<svg id="svg"')) {
-        svg.outerHTML = message.content
-          .replace(/<svg id="svg" (?:viewbox|style)=["'][^>]+["']/, '<svg id="svg"')
-      } else {
-        svg.outerHTML = '<svg id="svg"></svg>'
-      }
-      // 代价很大, 临时先这么写
-      div_container.outerHTML = div_container.outerHTML
-      window.paints = []
-      initPaint("svg");
-    }
-
-    // Handle the message inside the webview
-    window.addEventListener('message', event => {
-
-      const message = event.data // The JSON data our extension sent
-        || event.detail; // for debug in chrome
-
-      switch (message.command) {
-        case 'currentLine':
-          setContent(message);
-          break;
-      }
-    });
-  </script>
-  <script nonce="ToBeReplacedByRandomToken">
-    (function () {
-      const vscode = acquireVsCodeApi();
-      const lineContentInput = document.querySelector('input[type=text]');
-      document.querySelector('#text-nextline').onclick = function () {
-        vscode.postMessage({
-          command: 'editCurrentLine',
-          control: 'nextline',
-          text: lineContentInput.value
-        })
-      }
-      document.querySelector('#text-change-stay').onclick = function () {
-        vscode.postMessage({
-          command: 'editCurrentLine',
-          control: 'stay',
-          text: lineContentInput.value
-        })
-      }
-      document.querySelector('#text-change-nextline').onclick = function () {
-        vscode.postMessage({
-          command: 'editCurrentLine',
-          control: 'nextline',
-          text: lineContentInput.value
-        })
-      }
-      vscode.postMessage({ command: 'requestCurrentLine' })
-    }())
-  </script>
+  <script nonce="ToBeReplacedByRandomToken" src="./board/page.js"></script>
 </body>
 
 </html>
