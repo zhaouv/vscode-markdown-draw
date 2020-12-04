@@ -8,6 +8,7 @@
     https://github.com/syfxlin/graffiti-board/blob/5945b126c945073eced5e6eb78658bc2a7375881/index.html
   -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'unsafe-eval' 'nonce-ToBeReplacedByRandomToken';">
   <link rel="stylesheet" href="./board/Font-Awesome-5-8-2-all-min.css" />
   <link rel="stylesheet" href="./board/style.css" />
   <title>Draw Note</title>
@@ -146,10 +147,10 @@
 
     </div>
   </div>
-  <script src="./board/path-int.js"></script>
-  <script src="./board/main.js"></script>
+  <script nonce="ToBeReplacedByRandomToken" src="./board/path-int.js"></script>
+  <script nonce="ToBeReplacedByRandomToken" src="./board/main.js"></script>
 
-  <script>
+  <script nonce="ToBeReplacedByRandomToken">
 
     const lineContentInput = document.querySelector('input[type=text]');
 
@@ -173,7 +174,8 @@
     // Handle the message inside the webview
     window.addEventListener('message', event => {
 
-      const message = event.data; // The JSON data our extension sent
+      const message = event.data // The JSON data our extension sent
+        || event.detail; // for debug in chrome
 
       switch (message.command) {
         case 'currentLine':
@@ -182,7 +184,7 @@
       }
     });
   </script>
-  <script>
+  <script nonce="ToBeReplacedByRandomToken">
     (function () {
       const vscode = acquireVsCodeApi();
       const lineContentInput = document.querySelector('input[type=text]');

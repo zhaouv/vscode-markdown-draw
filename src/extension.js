@@ -2,6 +2,15 @@ const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
 
+function getNonce() {
+  let text = '';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  for (let i = 0; i < 32; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+}
+
 function loadWebviewFiles(root) {
   let main = fs.readFileSync(path.join(root, 'webview.html'), { encoding: 'utf8' })
   main = main.replace(/<[^\n]*"\.\/board\/[^\n]*>/g, s => {
@@ -11,11 +20,12 @@ function loadWebviewFiles(root) {
       case 'css':
         return '<style>' + content + '</style>'
       case 'js':
-        return '<script>' + content + '</script>'
+        return '<script nonce="ToBeReplacedByRandomToken">' + content + '</script>'
       default:
         return s
     }
   })
+  main=main.replace(/ToBeReplacedByRandomToken/g,getNonce())
   return main
 }
 const webviewContent = loadWebviewFiles(path.join(__dirname, '..'));
