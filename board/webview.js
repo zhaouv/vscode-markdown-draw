@@ -1,9 +1,15 @@
 const drawAPI = {
   unstable: {
     nonce: () => 'ToBeReplacedByRandomToken',
-    editCurrentLine(args) {
+    /**
+     * 
+     * @param {String} text text
+     * @param {Number} control moving number of the cursor
+     */
+    editCurrentLine({text,control}) {
       console.log({
-        ...args,
+        text,
+        control,
         command: 'editCurrentLine',
       });
     },
@@ -45,28 +51,30 @@ window.addEventListener('message', event => {
 
 document.querySelector('#text-nextline').onclick = function () {
   drawAPI.unstable.editCurrentLine({
-    control: 'nextline',
+    control: 1,
     text: lineContentInput.value
   })
 };
 document.querySelector('#text-change-stay').onclick = function () {
   drawAPI.unstable.editCurrentLine({
-    control: 'stay',
+    control: 0,
     text: lineContentInput.value
   })
 };
 document.querySelector('#text-change-nextline').onclick = function () {
   drawAPI.unstable.editCurrentLine({
-    control: 'nextline',
+    control: 1,
     text: lineContentInput.value
   })
 };
+
 (function () {
   if (typeof acquireVsCodeApi !== 'undefined') {
     const vscode = acquireVsCodeApi();
-    drawAPI.unstable.editCurrentLine = (args) => {
+    drawAPI.unstable.editCurrentLine = ({text,control}) => {
       vscode.postMessage({
-        ...args,
+        text,
+        control,
         command: 'editCurrentLine',
       })
     }

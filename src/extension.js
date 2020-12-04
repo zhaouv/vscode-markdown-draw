@@ -152,14 +152,14 @@ function activate(context) {
         let lf = '\n'
         edit.replace(new vscode.Range(currentLine, 0, currentLine + 1, 0), text + lf);
       }))
-    if (control === 'nextline') {
+    if (control !== 0) {
       p = p
         .then(() => vscode.window.showTextDocument(currentEditor.document, {
           viewColumn: currentEditor.viewColumn,
-          selection: new vscode.Range(currentLine + 1, 0, currentLine + 1, 0)
+          selection: new vscode.Range(currentLine + control, 0, currentLine + control, 0)
         })) // the next line somehow not working, so use this line
         // .then(() => currentEditor.revealRange(
-        //   new vscode.Range(currentLine + 1, 0, currentLine + 1, 0)
+        //   new vscode.Range(currentLine + control, 0, currentLine + control, 0)
         // )) 
         .then(() => {
           pushCurrentLine()
