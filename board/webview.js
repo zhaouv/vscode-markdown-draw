@@ -44,6 +44,19 @@ const drawAPI = {
         drawAPI.unstable.setSVGContent(content)
       }
     },
+    custom(content) {
+      console.log(content);
+      if (content.operate) {
+        content.operate.forEach(drawAPI.unstable.customOperate);
+      }
+    },
+    customOperate(operate){
+      console.log(operate);
+      if (operate.type==='script') {
+        let func = new Function(operate.function)
+        func()
+      }
+    },
   },
 }
 window.drawAPI = drawAPI
@@ -57,6 +70,9 @@ window.addEventListener('message', event => {
   switch (message.command) {
     case 'currentLine':
       drawAPI.unstable.setContent(message.content);
+      break;
+    case 'custom':
+      drawAPI.unstable.custom(message.content);
       break;
   }
 });
@@ -91,5 +107,6 @@ document.querySelector('#text-change-nextline').onclick = function () {
       })
     }
     vscode.postMessage({ command: 'requestCurrentLine' })
+    vscode.postMessage({ command: 'requestCustom' })
   }
 }());

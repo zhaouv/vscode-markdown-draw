@@ -44,6 +44,17 @@
 					"group": "7_modification" 
 				}
 			]
+		},
+		"configuration":{
+			"type": "object",
+			"title": "Draw Note",
+			"properties":{
+				"markdown-draw.customized-buttons":{
+					"type": "array",
+					"default": [],
+					"description": "Add customized buttons. See README.md for details"
+				}
+			}
 		}
 	},
 	"scripts": {},

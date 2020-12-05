@@ -64,6 +64,9 @@ function activate(context) {
           case 'requestCurrentLine':
             pushCurrentLine()
             return;
+          case 'requestCustom':
+            pushCustom()
+            return;
           case 'editCurrentLine':
             setEditorText(message.text, message.control);
             return;
@@ -165,6 +168,11 @@ function activate(context) {
           pushCurrentLine()
         })
     }
+  }
+
+  function pushCustom() {
+    let customizedButtons = vscode.workspace.getConfiguration('markdown-draw')['customized-buttons'];
+    currentPanel.webview.postMessage({ command: 'custom', content: { operate: customizedButtons } });
   }
 
   context.subscriptions.push(

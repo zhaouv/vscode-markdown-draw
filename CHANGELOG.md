@@ -2,6 +2,8 @@
 
 ## appending
 
+Customize buttons
+
 CSP script nonce
 
 ## 0.1.1 (2020-11-29)
