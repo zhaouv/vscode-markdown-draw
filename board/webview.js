@@ -5,6 +5,9 @@ if (typeof require !== 'undefined') {
 }
 
 const exposedFunctions = initPaint("svg");
+
+const lineContentInput = document.querySelector('input[type=text]');
+
 const drawAPI = {
   unstable: {
     nonce: () => 'ToBeReplacedByRandomToken',
@@ -23,23 +26,27 @@ const drawAPI = {
     reRegisterSVG() {
       exposedFunctions.reInit();
     },
+    setTextContent(content) {
+      lineContentInput.value = content;
+    },
+    setSVGContent(content) {
+      // 可能有问题的替换
+      document.getElementById('svg').innerHTML = content
+        .replace(/<svg id="svg"[^>]*>/, '')
+        .replace(/<\/svg>/, '')
+      drawAPI.unstable.reRegisterSVG()
+    },
+    setContent(content) {
+      drawAPI.unstable.setTextContent(content)
+      document.querySelector("#svg-clean")?.dispatchEvent(new Event('click'))
+      // 不准确的检查, 先这么写
+      if (content.startsWith('<svg id="svg"')) {
+        drawAPI.unstable.setSVGContent(content)
+      }
+    },
   },
 }
 window.drawAPI = drawAPI
-
-const lineContentInput = document.querySelector('input[type=text]');
-
-function setContent(message) {
-  lineContentInput.value = message.content;
-  document.querySelector("#svg-clean")?.dispatchEvent(new Event('click'))
-  // 不准确的检查, 先这么写
-  if (message.content.startsWith('<svg id="svg"')) {
-    document.getElementById('svg').innerHTML = message.content
-      .replace(/<svg id="svg"[^>]*>/, '')
-      .replace(/<\/svg>/, '')
-    drawAPI.unstable.reRegisterSVG()
-  }
-}
 
 // Handle the message inside the webview
 window.addEventListener('message', event => {
@@ -49,7 +56,7 @@ window.addEventListener('message', event => {
 
   switch (message.command) {
     case 'currentLine':
-      setContent(message);
+      drawAPI.unstable.setContent(message.content);
       break;
   }
 });

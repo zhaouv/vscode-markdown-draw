@@ -1199,7 +1199,7 @@ function initPaint(svgId, conf = null) {
   });
 
   document.querySelector("#svg-nextline").addEventListener("click", e => {
-    document.querySelector('#text-change-nextline').onclick()
+    document.querySelector('#text-change-nextline')?.onclick()
   });
   (['change-stay','change-nextline']).forEach(s=>{
     document.querySelector("#svg-"+s).addEventListener("click", e => {
@@ -1208,8 +1208,8 @@ function initPaint(svgId, conf = null) {
       textarea.value = svg.outerHTML.replace('<svg id="svg">',
       `<svg id="svg" viewbox="${x-10},${y-10},${width+20},${height+20}" style="height:${height+20}">`);
       document.querySelector("#images").append(textarea);
-      document.querySelector('input[type=text]').value = textarea.value+'  '
-      document.querySelector('#text-'+s).onclick()
+      window?.drawAPI.unstable.setTextContent(textarea.value+'  ');
+      document.querySelector('#text-'+s)?.onclick()
     });
   })
   return {reInit};
