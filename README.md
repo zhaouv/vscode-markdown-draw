@@ -18,7 +18,7 @@ or press `F1`, type `svg`, click the command
 
 I have not decided the interface. In this stage, it could work this way.
 
-Step 1. You should change the following code, run it on chrome, it prints one line of string.
+Step 1. You should change the following code, run it in chrome console. It prints one line of string.
 
 ```js
 console.log(JSON.stringify((()=>{
@@ -39,7 +39,7 @@ console.log(JSON.stringify((()=>{
 
 `"    // find a icon from https://fontawesome.com/v5.8.2/icons\n    const icon = 'beer' \n    const title = 'a new button'\n    const addGap = true\n    const onclick = ()=>{\n        drawAPI.unstable.setTextContent('a custom button works')\n    }\n\n    document.querySelector('div.svg-operate').insertAdjacentHTML('beforeEnd',(addGap?\"<span class='svgiconspliter'></span>\":\"\")+\"<div class='svg-btn fa fa-\"+icon+\"' title='\"+title+\"'><span></span></div>\");\n    document.querySelector('div.svg-operate > :last-child').onclick=onclick\n"`
 
-Step 2. Push the string to your setting.json
+Step 2. Push the string into your settings.json
 
 ```json
     "markdown-draw.customized-buttons": [
