@@ -6,6 +6,7 @@ if (typeof require !== 'undefined') {
 
 const exposedFunctions = initPaint("svg");
 
+const svgElement = document.getElementById('svg')
 const lineContentInput = document.querySelector('input[type=text]');
 
 const drawAPI = {
@@ -23,6 +24,7 @@ const drawAPI = {
         command: 'editCurrentLine',
       });
     },
+    getSVGElement: () => svgElement,
     reRegisterSVG() {
       exposedFunctions.reInit();
     },
@@ -31,7 +33,7 @@ const drawAPI = {
     },
     setSVGContent(content) {
       // 可能有问题的替换
-      document.getElementById('svg').innerHTML = content
+      svgElement.innerHTML = content
         .replace(/<svg id="svg"[^>]*>/, '')
         .replace(/<\/svg>/, '')
       drawAPI.unstable.reRegisterSVG()
