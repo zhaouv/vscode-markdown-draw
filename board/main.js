@@ -112,10 +112,13 @@ function initPaint(svgId, conf = null) {
   var redoBoxSizeList = [];
 
   // Init
-  for (const item of svg.children) {
-    undoList.push(item);
-    boxSizeList.push(item.getBBox());
-  }
+  var reInit = () => {
+    for (const item of svg.children) {
+      undoList.push(item);
+      boxSizeList.push(item.getBBox());
+    }
+  };
+  reInit();
 
   var getPoint = (x, y) => {
     var svgOffset = svg.getBoundingClientRect();
@@ -1179,6 +1182,8 @@ function initPaint(svgId, conf = null) {
   document.querySelector("#svg-clean").addEventListener("click", e => {
     undoList = [];
     redoList = [];
+    boxSizeList = [];
+    redoBoxSizeList = [];
     svg.innerHTML = "";
   });
 
@@ -1207,6 +1212,7 @@ function initPaint(svgId, conf = null) {
       document.querySelector('#text-'+s).onclick()
     });
   })
+  return {reInit};
 }
 
-initPaint("svg");
+exports.initPaint = initPaint

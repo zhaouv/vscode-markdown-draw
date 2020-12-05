@@ -1,3 +1,10 @@
+if (typeof require !== 'undefined') {
+  var { initPaint } = require('./main')
+} else {
+  var { initPaint } = exports
+}
+
+const exposedFunctions = initPaint("svg");
 const drawAPI = {
   unstable: {
     nonce: () => 'ToBeReplacedByRandomToken',
@@ -6,12 +13,15 @@ const drawAPI = {
      * @param {String} text text
      * @param {Number} control moving number of the cursor
      */
-    editCurrentLine({text,control}) {
+    editCurrentLine({ text, control }) {
       console.log({
         text,
         control,
         command: 'editCurrentLine',
       });
+    },
+    reRegisterSVG() {
+      exposedFunctions.reInit();
     },
   },
 }
@@ -21,19 +31,14 @@ const lineContentInput = document.querySelector('input[type=text]');
 
 function setContent(message) {
   lineContentInput.value = message.content;
-  var svg = document.getElementById('svg');
-  var div_container = document.querySelector('div.container')
-  // 不准确且不安全的检查, 先这么写
+  document.querySelector("#svg-clean")?.dispatchEvent(new Event('click'))
+  // 不准确的检查, 先这么写
   if (message.content.startsWith('<svg id="svg"')) {
-    svg.outerHTML = message.content
-      .replace(/<svg id="svg" (?:viewbox|style)=["'][^>]+["']/, '<svg id="svg"')
-  } else {
-    svg.outerHTML = '<svg id="svg"></svg>'
+    document.getElementById('svg').innerHTML = message.content
+      .replace(/<svg id="svg"[^>]*>/, '')
+      .replace(/<\/svg>/, '')
+    drawAPI.unstable.reRegisterSVG()
   }
-  // 代价很大, 临时先这么写
-  div_container.outerHTML = div_container.outerHTML
-  window.paints = []
-  initPaint("svg");
 }
 
 // Handle the message inside the webview
@@ -71,7 +76,7 @@ document.querySelector('#text-change-nextline').onclick = function () {
 (function () {
   if (typeof acquireVsCodeApi !== 'undefined') {
     const vscode = acquireVsCodeApi();
-    drawAPI.unstable.editCurrentLine = ({text,control}) => {
+    drawAPI.unstable.editCurrentLine = ({ text, control }) => {
       vscode.postMessage({
         text,
         control,
