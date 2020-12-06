@@ -1,8 +1,8 @@
 {
 	"name": "vscode-markdown-draw",
 	"displayName": "Draw Note",
-	"description": "Draw svg quick-responsively with a mouse or pen, designed for note-taking, formulas drafting. [Prototype stage now!]",
-	"version": "0.1.1",
+	"description": "Draw svg quick-responsively with a mouse or pen, designed for note-taking, formulas drafting. HTR/OCR to latex supported.[Prototype stage now!]",
+	"version": "0.1.2",
 	"publisher": "zhaouv",
 	"license": "Apache-2.0",
 	"repository": {
@@ -21,6 +21,9 @@
 		"markdown",
 		"note",
 		"draw",
+		"latex",
+		"OCR",
+		"HTR",
 		"svg"
 	],
 	"activationEvents": [
@@ -41,17 +44,27 @@
 				{
 					"command": "markdownDraw.editCurrentLineAsSVG",
 					"when": "editorFocus",
-					"group": "7_modification" 
+					"group": "7_modification"
 				}
 			]
 		},
-		"configuration":{
+		"configuration": {
 			"type": "object",
 			"title": "Draw Note",
-			"properties":{
-				"markdown-draw.customized-buttons":{
+			"properties": {
+				"markdown-draw.customized-buttons": {
 					"type": "array",
-					"default": [],
+					"default": [
+						{
+							"type": "comment",
+							"content": "change the type of next object to script to run the demo. See https://github.com/zhaouv/vscode-markdown-draw#customize-buttons for details"
+						},
+						{
+							"type": "script_demo",
+							"function": "    // find a icon from https://fontawesome.com/v5.8.2/icons\n    const icon = 'dice-one' \n    const title = 'a new button'\n    const addGap = false\n    const onclick = ()=>{\n        drawAPI.unstable.setTextContent('a custom button works')\n    }\n\n    document.querySelector('div.svg-operate').insertAdjacentHTML('beforeEnd',(addGap?\"<span class='svgiconspliter'></span>\":\"\")+\"<div class='svg-btn fa fa-\"+icon+\"' title='\"+title+\"'><span></span></div>\");\n    document.querySelector('div.svg-operate > :last-child').onclick=onclick\n",
+							"version": "0.1.2"
+						}
+					],
 					"description": "Add customized buttons. See README.md for details"
 				}
 			}

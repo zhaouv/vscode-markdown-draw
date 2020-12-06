@@ -121,20 +121,23 @@ function activate(context) {
     }
   }
 
+  let updateCheckStrings = ['', '']
+  function resetCheckStrings(str) {
+    updateCheckStrings[0]=updateCheckStrings[1]=str
+  }
   function realTimeCurrentEditorUpdate() {
-    let strings = ['', '']
     updateHandle = setInterval(() => {
       let { text, currentEditor_, currentLine_ } = getEditorText(false)
       if (typeof text === 'string' && currentPanel) {
         let topush = false
-        if (strings[0] !== strings[1] && text === strings[0]) {
+        if (updateCheckStrings[0] !== updateCheckStrings[1] && text === updateCheckStrings[0]) {
           topush = true
         }
-        strings[1] = strings[0]
-        strings[0] = text
+        updateCheckStrings[1] = updateCheckStrings[0]
+        updateCheckStrings[0] = text
+        currentEditor = currentEditor_
+        currentLine = currentLine_
         if (topush) {
-          currentEditor = currentEditor_
-          currentLine = currentLine_
           currentPanel.webview.postMessage({ command: 'currentLine', content: text });
         }
       }
@@ -154,6 +157,7 @@ function activate(context) {
       .then((editor) => editor.edit(edit => {
         let lf = '\n'
         edit.replace(new vscode.Range(currentLine, 0, currentLine + 1, 0), text + lf);
+        resetCheckStrings(text.split('\n')[0]+'\n')
       }))
     if (control !== 0) {
       p = p
