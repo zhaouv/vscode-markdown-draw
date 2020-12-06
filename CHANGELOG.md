@@ -1,9 +1,9 @@
 # Change Log
 
-## appending
+## 0.1.2 (2020-12-06)
 
-Customize buttons
-
+HTR to latex  
+Customize buttons  
 CSP script nonce
 
 ## 0.1.1 (2020-11-29)
