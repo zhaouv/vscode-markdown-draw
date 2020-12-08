@@ -18,6 +18,19 @@ open markdown file, right click at some line,
 
 or press `F1`, type `svg`, click the command
 
+## Prototype Stage
+
+> Compatibility is not guaranteed in prototype stage
+
+Todo:
+
++ [ ] fold the svg automatically and add a command to fold all svg
++ [ ] adjust behavior of pens
++ [ ] mathpix
++ [ ] fix the bug of polygon
+
+Welcome [star](https://github.com/zhaouv/vscode-markdown-draw/stargazers) to support the project or [issue](https://github.com/zhaouv/vscode-markdown-draw/issues) to provide ideas
+
 ## Customize Buttons
 
 I have not decided the interface. In this stage, it could work this way.
@@ -73,7 +86,7 @@ I also know that using the mathpix API is a popular choice for OCR to latex.
 Its API it free for 1000/month, but you have to provide a card. 
 They charge a one-time non-refundable setup fee of $1.  
 Anyway the calling script of mathpix API is easy to write, 
-I may pay them one dollar and then provide a new button later.
+I may pay provide a new button later.
 
 ## License
 
