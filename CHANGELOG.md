@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.4 (2021-03-01)
+
+HTR to latex (add mathpix API)  
+
 ## 0.1.3 (2020-12-08)
 
 icon

@@ -2,7 +2,7 @@
 	"name": "vscode-markdown-draw",
 	"displayName": "Draw Note",
 	"description": "Draw svg quick-responsively with a mouse or pen, designed for note-taking, formulas drafting. HTR/OCR to latex supported.[Prototype stage now!]",
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"publisher": "zhaouv",
 	"icon": "img_md/icon.png",
 	"license": "Apache-2.0",

@@ -25,6 +25,45 @@ const drawAPI = {
       });
     },
     getSVGElement: () => svgElement,
+    /**
+     * 
+     * @param {(dataURL:String)=>undefined} cb callback
+     */
+    getPNG(cb) {
+      var svg = drawAPI.unstable.getSVGElement()
+      var { x, y, width, height } = svg.getBBox();
+      var b = 10
+      var b2 = 2 * b
+      var wb = width + x + b
+      var hb = height + x + b
+      var w = width + b2
+      var h = height + b2
+      var data = svg.outerHTML.replace('<svg id="svg">',
+        `<svg id="svgpng" viewbox="${x - b},${y - b},${w},${h}" style="height:${h}" xmlns="http://www.w3.org/2000/svg">`);
+      var r = window.devicePixelRatio || 1;
+      var setsize = (ele, ww, hh) => {
+        ele.style.width = ww + 'px'
+        ele.style.height = hh + 'px'
+        ele.setAttribute('width', ww * r)
+        ele.setAttribute('height', hh * r)
+      }
+      var can = document.createElement('canvas')
+      setsize(can, w, h)
+      var ctx = can.getContext('2d')
+      var can2 = document.createElement('canvas')
+      setsize(can2, wb, hb)
+      var ctx2 = can2.getContext('2d')
+      ctx2.scale(r, r)
+      var img = new Image();
+      setsize(img, wb, hb)
+      img.onload = function () {
+        ctx2.drawImage(img, 0, 0)
+        ctx.putImageData(ctx2.getImageData((x - b) * r, (y - b) * r, w * r, h * r), 0, 0);
+        cb(can.toDataURL())
+        // document.body.append(can)
+      };
+      img.src = 'data:image/svg+xml;base64,' + btoa(data);
+    },
     reRegisterSVG() {
       exposedFunctions.reInit();
     },
@@ -52,9 +91,9 @@ const drawAPI = {
         content.operate.forEach(drawAPI.unstable.customOperate);
       }
     },
-    customOperate(operate){
+    customOperate(operate) {
       console.log(operate);
-      if (operate.type==='script') {
+      if (operate.type === 'script') {
         let func = new Function(operate.function)
         func()
       }

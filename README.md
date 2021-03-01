@@ -26,7 +26,6 @@ Todo:
 
 + [ ] fold the svg automatically and add a command to fold all svg
 + [ ] adjust behavior of pens
-+ [ ] mathpix
 + [ ] fix the bug of polygon
 
 Welcome [star](https://github.com/zhaouv/vscode-markdown-draw/stargazers) to support the project or [issue](https://github.com/zhaouv/vscode-markdown-draw/issues) to provide ideas
@@ -82,11 +81,22 @@ Paste your token on `PasteYourTokenHere`, and push this into setting.json follow
 ```
 
 Actually it is HTR not OCR.  
-I also know that using the mathpix API is a popular choice for OCR to latex.  
+
+And the mathpix API is a popular choice for OCR to latex.  
 Its API it free for 1000/month, but you have to provide a card. 
 They charge a one-time non-refundable setup fee of $1.  
-Anyway the calling script of mathpix API is easy to write, 
-I may pay provide a new button later.
+
+<!-- I am considering providing another extension to convert the clipbord-picture to latex. -->
+
+<details>
+<summary>mathpix API button(click to expand)</summary>
+
+```json
+{"type":"script","version":"0.1.2","function":"var token = { app_id: 'PasteYourTokenHere', app_key: 'PasteYourTokenHere' }\nvar addGap = true\nvar icon = 'square-root-alt'\nvar title = 'Recognize to latex'\n\ndocument.querySelector('div.svg-operate').insertAdjacentHTML('beforeEnd', (addGap ? \"<span class='svgiconspliter'></span>\" : \"\") + \"<div class='svg-btn fa fa-\" + icon + \"' title='\" + title + \"'><span></span></div>\");\nvar btnElement = document.querySelector('div.svg-operate > :last-child')\nbtnElement.onclick = () => {\n\n drawAPI.unstable.getPNG((dataURL) => {\n drawAPI.unstable.setTextContent('calling the API')\n xhrPost(dataURL, (err,ret)=>{\n console.log(err,ret)\n let latex = JSON.parse(ret)['latex']\n let content = '\\n$$'+latex.trim()+'$$ '+' '\n drawAPI.unstable.setTextContent('')\n drawAPI.unstable.editCurrentLine({\n control: 0,\n text: content\n })\n })\n })\n}\n\nfunction xhrPost(dataURL, callback) {\n var xhr = new XMLHttpRequest();\n xhr.onreadystatechange = function () {\n if (xhr.readyState == 4) {\n if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {\n callback(null, xhr.responseText);\n } else {\n callback([xhr.status, xhr.responseText], null);\n }\n }\n }\n xhr.open('post', 'https://api.mathpix.com/v3/latex');\n xhr.setRequestHeader('app_id', token.app_id)\n xhr.setRequestHeader('app_key', token.app_key)\n xhr.setRequestHeader('Content-type', 'application/json')\n xhr.send(JSON.stringify({ 'url': dataURL }));\n}\n"}
+```
+Paste your token on `PasteYourTokenHere`, and push this into setting.json following the previous section [Customize Buttons](#Customize-Buttons). The json generated from [this script](https://github.com/zhaouv/vscode-markdown-draw/blob/master/buttons_demo/ocr_to_latex_mathpix.js)
+
+</details>
 
 ## License
 
