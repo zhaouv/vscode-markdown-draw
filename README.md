@@ -69,6 +69,9 @@ Step 2. Push the string into your settings.json
 
 ### Convert formulas to latex
 
+<details open>
+<summary>myscript API</summary>
+
 Recognitize handwritten text to latex using API of myscript.com  
 which declares `MyScript has been working on this matter for over two decades now and there is no question that our technology is ahead of Microsoft Ink Recognizer. ` at their [article](https://medium.com/@myscript/microsoft-ink-recognizer-an-opportunity-for-myscript-9e55fe45afae).  
 Create a account at https://developer.myscript.com/getting-started/web to get token.  
@@ -82,17 +85,24 @@ Paste your token on `PasteYourTokenHere`, and push this into setting.json follow
 
 Actually it is HTR not OCR.  
 
-And the mathpix API is a popular choice for OCR to latex.  
+</details>
+
+<details>
+<summary>mathpix API (click to expand)</summary>
+
+The mathpix API is a popular choice for OCR to latex.  
 Its API it free for 1000/month, but you have to provide a card. 
 They charge a one-time non-refundable setup fee of $1.  
 
-<!-- I am considering providing another extension to convert the clipbord-picture to latex. -->
+The following script also supports drag and paste image to latex by mathpix API.  
 
-<details>
-<summary>mathpix API button(click to expand)</summary>
+And I am considering providing another independent extension to convert the clipbord-picture to latex.  
+Which need not to open a webview panel and provides a command and is able to bind keys.  
+(It will be <https://github.com/zhaouv/vscode-paste-to-latex-mathpix.git> if it becomes existence.)
+
 
 ```json
-{"type":"script","version":"0.1.2","function":"var token = { app_id: 'PasteYourTokenHere', app_key: 'PasteYourTokenHere' }\nvar addGap = true\nvar icon = 'square-root-alt'\nvar title = 'Recognize to latex'\n\ndocument.querySelector('div.svg-operate').insertAdjacentHTML('beforeEnd', (addGap ? \"<span class='svgiconspliter'></span>\" : \"\") + \"<div class='svg-btn fa fa-\" + icon + \"' title='\" + title + \"'><span></span></div>\");\nvar btnElement = document.querySelector('div.svg-operate > :last-child')\nbtnElement.onclick = () => {\n\n drawAPI.unstable.getPNG((dataURL) => {\n drawAPI.unstable.setTextContent('calling the API')\n xhrPost(dataURL, (err,ret)=>{\n console.log(err,ret)\n let latex = JSON.parse(ret)['latex']\n let content = '\\n$$'+latex.trim()+'$$ '+' '\n drawAPI.unstable.setTextContent('')\n drawAPI.unstable.editCurrentLine({\n control: 0,\n text: content\n })\n })\n })\n}\n\nfunction xhrPost(dataURL, callback) {\n var xhr = new XMLHttpRequest();\n xhr.onreadystatechange = function () {\n if (xhr.readyState == 4) {\n if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {\n callback(null, xhr.responseText);\n } else {\n callback([xhr.status, xhr.responseText], null);\n }\n }\n }\n xhr.open('post', 'https://api.mathpix.com/v3/latex');\n xhr.setRequestHeader('app_id', token.app_id)\n xhr.setRequestHeader('app_key', token.app_key)\n xhr.setRequestHeader('Content-type', 'application/json')\n xhr.send(JSON.stringify({ 'url': dataURL }));\n}\n"}
+{"type":"script","version":"0.1.2","function":"var token = { app_id: 'PasteYourTokenHere', app_key: 'PasteYourTokenHere' }\nvar addGap = true\nvar icon = 'square-root-alt'\nvar title = 'Recognize to latex'\n\ndocument.querySelector('div.svg-operate').insertAdjacentHTML('beforeEnd', (addGap ? \"<span class='svgiconspliter'></span>\" : \"\") + \"<div class='svg-btn fa fa-\" + icon + \"' title='\" + title + \"'><span></span></div>\");\nvar btnElement = document.querySelector('div.svg-operate > :last-child')\nbtnElement.onclick = () => {\n\n drawAPI.unstable.getPNG((dataURL) => {\n drawAPI.unstable.setTextContent('calling the API')\n xhrPost(dataURL, (err,ret)=>{\n console.log(err,ret)\n let latex = JSON.parse(ret)['latex']\n let content = '\\n$$'+latex.trim()+'$$ '+' '\n drawAPI.unstable.setTextContent('')\n drawAPI.unstable.editCurrentLine({\n control: 0,\n text: content\n })\n })\n })\n}\n\nfunction xhrPost(dataURL, callback) {\n var xhr = new XMLHttpRequest();\n xhr.onreadystatechange = function () {\n if (xhr.readyState == 4) {\n if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {\n callback(null, xhr.responseText);\n } else {\n callback([xhr.status, xhr.responseText], null);\n }\n }\n }\n xhr.open('post', 'https://api.mathpix.com/v3/latex');\n xhr.setRequestHeader('app_id', token.app_id)\n xhr.setRequestHeader('app_key', token.app_key)\n xhr.setRequestHeader('Content-type', 'application/json')\n xhr.send(JSON.stringify({ 'url': dataURL }));\n}\n\n// drag and paste image\nfunction convertImage(dataURL) {\n drawAPI.unstable.setTextContent('calling the API to convert image')\n xhrPost(dataURL, (err,ret)=>{\n console.log(err,ret)\n let latex = JSON.parse(ret)['latex']\n let content = '\\n$$'+latex.trim()+'$$ '+' '\n drawAPI.unstable.setTextContent('')\n drawAPI.unstable.editCurrentLine({\n control: 0,\n text: content\n })\n })\n\n}\nfunction getImage(items, cb) {\n var file = null;\n if (items && items.length) {\n for (var i = 0; i < items.length; i++) {\n if (items[i].type.indexOf('image') !== -1) {\n file = items[i].getAsFile();\n break;\n }\n }\n }\n // console.log(file);\n if (file) {\n var reader = new FileReader()\n reader.onload = function (event) {\n cb(event.target.result);\n }\n reader.readAsDataURL(file);\n }\n}\nvar bindElement = document.body\nbindElement.addEventListener('paste', function (event) {\n var items = event.clipboardData?.items;\n getImage(items,convertImage);\n});\nbindElement.ondragover = function (ev) {\n ev.preventDefault();\n}\nbindElement.ondrop = function (ev) {\n ev.preventDefault();\n var items = ev.dataTransfer.items;\n getImage(items,convertImage);\n}\n"}
 ```
 Paste your token on `PasteYourTokenHere`, and push this into setting.json following the previous section [Customize Buttons](#Customize-Buttons). The json generated from [this script](https://github.com/zhaouv/vscode-markdown-draw/blob/master/buttons_demo/ocr_to_latex_mathpix.js)
 

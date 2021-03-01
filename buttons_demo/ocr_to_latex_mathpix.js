@@ -2,6 +2,8 @@
 Recognitize handwritten text to latex using api of mathpix
 Its API it free for 1000/month, but you have to provide a card.
 They charge a one-time non-refundable setup fee of $1.
+
+Also support drag and paste image to latex
 */
 var fff=()=>{
 
@@ -45,6 +47,54 @@ function xhrPost(dataURL, callback) {
     xhr.setRequestHeader('app_key', token.app_key)
     xhr.setRequestHeader('Content-type', 'application/json')
     xhr.send(JSON.stringify({ 'url': dataURL }));
+}
+
+// drag and paste image
+function convertImage(dataURL) {
+    drawAPI.unstable.setTextContent('calling the API to convert image')
+    xhrPost(dataURL, (err,ret)=>{
+        console.log(err,ret)
+        let latex = JSON.parse(ret)['latex']
+        let content = '\n$$'+latex.trim()+'$$ '+' '
+        drawAPI.unstable.setTextContent('')
+        drawAPI.unstable.editCurrentLine({
+            control: 0,
+            text: content
+        })
+    })
+
+}
+function getImage(items, cb) {
+    var file = null;
+    if (items && items.length) {
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+                file = items[i].getAsFile();
+                break;
+            }
+        }
+    }
+    // console.log(file);
+    if (file) {
+        var reader = new FileReader()
+        reader.onload = function (event) {
+            cb(event.target.result);
+        }
+        reader.readAsDataURL(file);
+    }
+}
+var bindElement = document.body
+bindElement.addEventListener('paste', function (event) {
+    var items = event.clipboardData?.items;
+    getImage(items,convertImage);
+});
+bindElement.ondragover = function (ev) {
+    ev.preventDefault();
+}
+bindElement.ondrop = function (ev) {
+    ev.preventDefault();
+    var items = ev.dataTransfer.items;
+    getImage(items,convertImage);
 }
 
 }
