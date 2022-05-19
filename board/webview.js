@@ -84,6 +84,9 @@ const drawAPI = {
       if (content.startsWith('<svg id="svg"')) {
         drawAPI.unstable.setSVGContent(content)
       }
+      else if (match = /!\[.*\]\((.*\.svg)\)/.exec(content)) {
+        drawAPI.unstable.readSVGContent(match[1])
+      }
     },
     custom(content) {
       console.log(content);
@@ -115,6 +118,9 @@ window.addEventListener('message', event => {
     case 'custom':
       drawAPI.unstable.custom(message.content);
       break;
+    case 'readFile':
+      drawAPI.unstable.setSVGContent(message.content);
+      break;
   }
 });
 
@@ -145,6 +151,12 @@ document.querySelector('#text-change-nextline').onclick = function () {
         text,
         control,
         command: 'editCurrentLine',
+      })
+    }
+    drawAPI.unstable.readSVGContent = (file) => {
+      vscode.postMessage({
+        file,
+        command: 'readFile',
       })
     }
     vscode.postMessage({ command: 'requestCurrentLine' })

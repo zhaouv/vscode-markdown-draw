@@ -67,14 +67,21 @@
 						}
 					],
 					"description": "Add customized buttons. See README.md for details"
+				},
+				"markdown-draw.directory": {
+					"type": "string",
+					"default": "",
+					"description": "Save SVG to directory; write SVG inline if blank"
 				}
 			}
 		}
 	},
 	"scripts": {},
-	"dependencies": {},
+	"dependencies": {
+		"uuid": "^8.3.2"
+	},
 	"devDependencies": {
-		"@types/vscode": "^1.47.0",
-		"@types/node": "^12.12.0"
+		"@types/node": "^12.12.0",
+		"@types/vscode": "^1.47.0"
 	}
 }
