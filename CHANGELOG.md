@@ -1,5 +1,11 @@
 # Change Log
 
+## doing (2022-06-05)
+
+shortcut bind of webview (reference: fork of [joseaeltala](https://github.com/joseaeltala/vscode-markdown-draw/commit/b24a96ac7710a7177461bf7056152c79a81bd97d) and [JL-MORENOCID](https://github.com/zhaouv/vscode-markdown-draw/compare/master...JL-MORENOCID:master))
+
+
+
 ## 0.1.4 (2021-03-01)
 
 HTR to latex (by mathpix API)  

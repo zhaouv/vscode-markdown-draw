@@ -98,6 +98,32 @@ const drawAPI = {
         func()
       }
     },
+    keybindings: {},
+    updatekeybindings(webviewKeybindings) {
+      webviewKeybindings.forEach(v=>{
+        if (v.key) {
+          drawAPI.unstable.keybindings[v.key.toLowerCase()]=v.command
+        }
+      })
+    },
+    ShortCuts(e){
+      let evtobj = window.event? event : e
+      let key = evtobj.key
+      if (evtobj.ctrlKey) {
+        key='ctrl+'+key
+      }
+      let title = drawAPI.unstable.keybindings[key.toLowerCase()]
+      console.log(evtobj,key.toLowerCase(),title)
+      if (title) {
+        let buttons = document.querySelectorAll(".svg-btn")
+        for (const button of buttons) {
+          if(button.getAttribute('title') == title){
+            button.dispatchEvent(new Event('click'))
+            return
+          }
+        }
+      }
+    },
   },
 }
 window.drawAPI = drawAPI
@@ -136,6 +162,7 @@ document.querySelector('#text-change-nextline').onclick = function () {
     text: lineContentInput.value
   })
 };
+document.onkeydown = drawAPI.unstable.ShortCuts;
 
 (function () {
   if (typeof acquireVsCodeApi !== 'undefined') {

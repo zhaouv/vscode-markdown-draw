@@ -108,6 +108,70 @@ Paste your token on `PasteYourTokenHere`, and push this into setting.json follow
 
 </details>
 
+## webview-keybindings
+
+default keybind is
+```json
+    "markdown-draw.webview-keybindings": [
+        {
+            "key": "ctrl+s",
+            "command": "change and stay"
+        },
+        {
+            "key": "ctrl+z",
+            "command": "undo"
+        },
+        {
+            "key": "ctrl+y",
+            "command": "redo"
+        },
+        {
+            "key": "ctrl+l",
+            "command": "Recognize to latex"
+        },
+        {
+            "key": "f2",
+            "command": "line"
+        },
+        {
+            "key": "f4",
+            "command": "pen"
+        },
+        {
+            "key": "f6",
+            "command": "eraser"
+        },
+        {
+            "key": "f7",
+            "command": "rect"
+        },
+        {
+            "key": "f8",
+            "command": "circle"
+        },
+        {
+            "key": "f9",
+            "command": "select"
+        },
+        {
+            "key": "f10",
+            "command": "clear board"
+        }
+    ]
+```
+
+Only support `ctrl+<some char>` `f<1~12>` now (just because I am lazy, PR is willcome to support `ctrl+shift+<some char>` and etc.).
+
+If you want to cancel a keybinding, just move it out of the list or change it as
+```json
+        {
+            "key": "f2",
+            "command": ""
+        },
+```
+
+When you press the key. A click will send to the first title-match button.
+
 ## License
 
 [Apache-2.0](./LICENSE)

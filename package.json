@@ -2,7 +2,7 @@
 	"name": "vscode-markdown-draw",
 	"displayName": "Draw Note",
 	"description": "Draw svg quick-responsively with a mouse or pen, designed for note-taking, formulas drafting. HTR/OCR to latex supported.[Prototype stage now!]",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"publisher": "zhaouv",
 	"icon": "img_md/icon.png",
 	"license": "Apache-2.0",
@@ -67,6 +67,60 @@
 						}
 					],
 					"description": "Add customized buttons. See README.md for details"
+				},
+				"markdown-draw.webview-keybindings": {
+					"type": "array",
+					"default": [
+						{
+							"type": "comment",
+							"content": "custom keybindings of webview panel. See https://github.com/zhaouv/vscode-markdown-draw#webview-keybindings for details"
+						},
+						{
+							"key": "ctrl+s",
+							"command": "change and stay"
+						},
+						{
+							"key": "ctrl+z",
+							"command": "undo"
+						},
+						{
+							"key": "ctrl+y",
+							"command": "redo"
+						},
+						{
+							"key": "ctrl+l",
+							"command": "Recognize to latex"
+						},
+						{
+							"key": "f2",
+							"command": "line"
+						},
+						{
+							"key": "f4",
+							"command": "pen"
+						},
+						{
+							"key": "f6",
+							"command": "eraser"
+						},
+						{
+							"key": "f7",
+							"command": "rect"
+						},
+						{
+							"key": "f8",
+							"command": "circle"
+						},
+						{
+							"key": "f9",
+							"command": "select"
+						},
+						{
+							"key": "f10",
+							"command": "clear board"
+						}
+					],
+					"description": "Custom keybindings of webview panel. See README.md for details"
 				}
 			}
 		}
