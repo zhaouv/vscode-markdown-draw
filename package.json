@@ -68,10 +68,15 @@
 					],
 					"description": "Add customized buttons. See README.md for details"
 				},
+				"markdown-draw.auto-folding": {
+					"type": "boolean",
+					"default": true,
+					"description": "use auto-folding moding, wrap inline svg with region"
+				},
 				"markdown-draw.directory": {
 					"type": "string",
 					"default": "",
-					"description": "Save SVG to directory; write SVG inline if blank"
+					"description": "SVG saving directory"
 				},
 				"markdown-draw.webview-keybindings": {
 					"type": "array",
@@ -82,7 +87,11 @@
 						},
 						{
 							"key": "ctrl+s",
-							"command": "change and stay"
+							"command": "save inline"
+						},
+						{
+							"key": "ctrl+f",
+							"command": "save to .svg file"
 						},
 						{
 							"key": "ctrl+z",

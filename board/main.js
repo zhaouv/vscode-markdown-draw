@@ -1201,7 +1201,7 @@ function initPaint(svgId, conf = null) {
   document.querySelector("#svg-nextline").addEventListener("click", e => {
     document.querySelector('#text-change-nextline')?.onclick()
   });
-  (['change-stay', 'change-nextline']).forEach(s => {
+  (['change-stay', 'change-nextline', 'save-file']).forEach(s => {
     document.querySelector("#svg-" + s).addEventListener("click", e => {
       let textarea = document.createElement("textarea");
       let { x, y, width, height } = svg.getBBox();

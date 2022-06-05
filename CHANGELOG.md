@@ -1,13 +1,14 @@
 # Change Log
 
-## doing (2022-06-05)
+## 0.1.5 (2022-06-05)
 
-Shortcut bind of webview (reference: fork of [joseaeltala](https://github.com/joseaeltala/vscode-markdown-draw/commit/b24a96ac7710a7177461bf7056152c79a81bd97d) and [JL-MORENOCID](https://github.com/zhaouv/vscode-markdown-draw/compare/master...JL-MORENOCID:master))
+Shortcut bindings of webview (reference: fork of [joseaeltala](https://github.com/joseaeltala/vscode-markdown-draw/commit/b24a96ac7710a7177461bf7056152c79a81bd97d) and [JL-MORENOCID](https://github.com/zhaouv/vscode-markdown-draw/compare/master...JL-MORENOCID:master))
 
 Collapse svg input element and add toggle button [PR#4](https://github.com/zhaouv/vscode-markdown-draw/pull/4). Thanks [hall](https://github.com/hall).
 
 Allow storing svg in external file [PR#3](https://github.com/zhaouv/vscode-markdown-draw/pull/3). Thanks [hall](https://github.com/hall) again!
 
+Auto folding (can be disabled in settings)
 
 ## 0.1.4 (2021-03-01)
 

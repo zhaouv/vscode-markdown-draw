@@ -17,10 +17,11 @@ const drawAPI = {
      * @param {String} text text
      * @param {Number} control moving number of the cursor
      */
-    editCurrentLine({ text, control }) {
+    editCurrentLine({ text, control, ...rest }) {
       console.log({
         text,
         control,
+        file:!!rest.file,
         command: 'editCurrentLine',
       });
     },
@@ -175,15 +176,23 @@ document.querySelector('#text-change-nextline').onclick = function () {
     text: lineContentInput.value
   })
 };
+document.querySelector('#text-save-file').onclick = function () {
+  drawAPI.unstable.editCurrentLine({
+    control: 0,
+    text: lineContentInput.value,
+    file: true
+  })
+};
 document.onkeydown = drawAPI.unstable.ShortCuts;
 
 (function () {
   if (typeof acquireVsCodeApi !== 'undefined') {
     const vscode = acquireVsCodeApi();
-    drawAPI.unstable.editCurrentLine = ({ text, control }) => {
+    drawAPI.unstable.editCurrentLine = ({ text, control, ...rest }) => {
       vscode.postMessage({
         text,
         control,
+        file:!!rest.file,
         command: 'editCurrentLine',
       })
     }

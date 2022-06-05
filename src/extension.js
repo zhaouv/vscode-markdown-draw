@@ -2,6 +2,9 @@ const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
 
+const foldStart = '<!-- #region drawnote -->'
+const foldEnd = '<!-- #endregion -->'
+
 function getRandomString() {
   let text = '';
   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -12,6 +15,10 @@ function getRandomString() {
 }
 const getNonce = getRandomString;
 const generateSVGName = getRandomString;
+
+function foldingMod() {
+  return vscode.workspace.getConfiguration('markdown-draw')['auto-folding']
+}
 
 function loadWebviewFiles(root) {
   let main = fs.readFileSync(path.join(root, 'webview.html'), { encoding: 'utf8' })
@@ -43,6 +50,7 @@ function activate(context) {
   /** @type {vscode.TextEditor | undefined} */
   let currentEditor = undefined;
   let currentLine = 0;
+  let currentInFolding = false;
   let currentText = "";
   let updateHandle = undefined;
 
@@ -71,7 +79,7 @@ function activate(context) {
             pushCustom()
             return;
           case 'editCurrentLine':
-            setEditorText(message.text, message.control);
+            setEditorText(message.text, message.control, message.file);
             return;
           case 'readSVGFile':
             currentPanel.webview.postMessage({ command: 'readSVGFile', content: readFile(message.file) });
@@ -115,6 +123,17 @@ function activate(context) {
     currentLine_ = currentEditor_.selection.active.line
 
     let text = currentEditor_.document.getText(new vscode.Range(currentLine_, 0, currentLine_ + 1, 0))
+    currentInFolding = false
+    if (text.startsWith(foldStart)){
+      currentLine_ += 1
+      currentInFolding = true
+      text = currentEditor_.document.getText(new vscode.Range(currentLine_, 0, currentLine_ + 1, 0))
+    }
+    if (text.startsWith(foldEnd)){
+      currentLine_ -= 1
+      currentInFolding = true
+      text = currentEditor_.document.getText(new vscode.Range(currentLine_, 0, currentLine_ + 1, 0))
+    }
     currentText = text
     return { text, currentEditor_, currentLine_ }
   }
@@ -166,9 +185,9 @@ function activate(context) {
     return fs.readFileSync(path.join(vscode.workspace.rootPath, filename), { encoding: 'utf8' });
   }
 
-  function setEditorText(text, control) {
+  function setEditorText(text, control, file) {
     let settings = vscode.workspace.getConfiguration('markdown-draw');
-    if (settings.directory) {
+    if (file) {
       let filename = `${generateSVGName()}.svg`
       let alt = "";
 
@@ -180,6 +199,12 @@ function activate(context) {
 
       writeFile(text, filename)
       text = `![${alt}](${settings.directory}/${filename})`
+      if (settings.directory=='') {
+        text = `![${alt}](${filename})`
+      }
+    } else if (currentInFolding == false && foldingMod()) {
+      text = foldStart +'\n'+ text +'\n'+ foldEnd
+      currentInFolding = true
     }
 
     if (!currentEditor || currentEditor.document.isClosed) {
@@ -208,6 +233,7 @@ function activate(context) {
           pushCurrentLine()
         })
     }
+    if(foldingMod())p=p.then(()=>vscode.commands.executeCommand('editor.foldAllMarkerRegions'))
   }
 
   function pushCustom() {
@@ -227,11 +253,13 @@ function activate(context) {
       if (currentPanel) {
         showPanel()
         pushCurrentLine()
+        if(foldingMod())vscode.commands.executeCommand('editor.foldAllMarkerRegions')
       } else {
         vscode.commands.executeCommand('workbench.action.editorLayoutTwoRowsRight')
           .then(() => {
             createNewPanel()
             pushCurrentLine()
+            if(foldingMod())vscode.commands.executeCommand('editor.foldAllMarkerRegions')
           })
       }
     })

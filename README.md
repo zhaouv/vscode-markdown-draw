@@ -2,6 +2,8 @@
 
 [![](https://img.shields.io/github/stars/zhaouv/vscode-markdown-draw.svg)](https://github.com/zhaouv/vscode-markdown-draw/stargazers) [![](https://img.shields.io/github/forks/zhaouv/vscode-markdown-draw.svg)](https://github.com/zhaouv/vscode-markdown-draw/network/members) [![](https://img.shields.io/github/issues/zhaouv/vscode-markdown-draw.svg)](https://github.com/zhaouv/vscode-markdown-draw/issues) [![](https://img.shields.io/github/license/zhaouv/vscode-markdown-draw.svg)](https://github.com/zhaouv/vscode-markdown-draw/blob/master/LICENSE) [![](https://vsmarketplacebadge.apphb.com/version/zhaouv.vscode-markdown-draw.svg)](https://marketplace.visualstudio.com/items?itemName=zhaouv.vscode-markdown-draw)
 
+Features **shortcut bindings** / **saving to SVG file** / **auto folding** added
+
 **This project is in the prototype stage !**
 
 Draw svg quick-responsively with a mouse or pen,  
@@ -24,7 +26,7 @@ or press `F1`, type `svg`, click the command
 
 Todo:
 
-+ [ ] fold the svg automatically and add a command to fold all svg
++ [x] fold the svg automatically
 + [ ] adjust behavior of pens
 + [ ] fix the bug of polygon
 
@@ -115,7 +117,11 @@ default keybind is
     "markdown-draw.webview-keybindings": [
         {
             "key": "ctrl+s",
-            "command": "change and stay"
+            "command": "save inline"
+        },
+        {
+            "key": "ctrl+f",
+            "command": "save to .svg file"
         },
         {
             "key": "ctrl+z",
