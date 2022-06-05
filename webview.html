@@ -15,7 +15,7 @@
 </head>
 
 <body>
-  <input type="text" value="current line">
+  <input id="svg-text" type="text" placeholder="current line" ; style="display: none">
   <div style="display: none;">
     <input type="button" value="nextline" id="text-nextline">
     <input type="button" value="stay-nextline" id="text-change-stay">
@@ -89,6 +89,9 @@
           <div class="svg-btn fa fa-caret-square-down" id="svg-change-nextline" title="change and go next line">
             <span></span>
           </div>
+        </div>
+        <div class="svg-btn fa fa-file" id="svg-show-text" title="show svg text">
+          <span></span>
         </div>
       </div>
       <div class="svg-settings" style="display: none;">
