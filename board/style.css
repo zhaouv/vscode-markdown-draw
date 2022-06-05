@@ -101,7 +101,7 @@ select {
 
 .svg-container {
   /* float: left; */
-  height: calc(99vh - 35px - 42px);
+  height: calc(99vh - 35px);
   /* width: 70%; */
 }
 
@@ -129,7 +129,7 @@ select {
 
 @media (max-width: 613px) {
   .svg-container {
-    height: calc(98vh - 51px - 42px);
+    height: calc(98vh - 51px);
   }
   .svg-button {
     height: 51px;
