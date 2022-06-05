@@ -212,6 +212,13 @@ function activate(context) {
   function pushCustom() {
     let customizedButtons = vscode.workspace.getConfiguration('markdown-draw')['customized-buttons'];
     currentPanel.webview.postMessage({ command: 'custom', content: { operate: customizedButtons } });
+
+    let webviewKeybindings = vscode.workspace.getConfiguration('markdown-draw')['webview-keybindings'];
+    currentPanel.webview.postMessage({ command: 'custom', content: { operate: [{
+      "type": "script",
+      "function": "drawAPI.unstable.updatekeybindings("+JSON.stringify(webviewKeybindings)+")",
+      "version": "0.1.2"
+    }] } });
   }
 
   context.subscriptions.push(

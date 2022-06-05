@@ -5,9 +5,9 @@
  */
 
 if (typeof require !== 'undefined') {
-  var {intersect} = require('./path-int')
+  var { intersect } = require('./path-int')
 } else {
-  var {intersect} = exports
+  var { intersect } = exports
 }
 
 window.paints = [];
@@ -473,12 +473,12 @@ function initPaint(svgId, conf = null) {
               .map(
                 item =>
                   `${(item.x - resizePoints.x) * s.x +
-                    resizePoints.x +
-                    x -
-                    tempPoint.x} ${(item.y - resizePoints.y) * s.y +
-                    resizePoints.y +
-                    y -
-                    tempPoint.y}`
+                  resizePoints.x +
+                  x -
+                  tempPoint.x} ${(item.y - resizePoints.y) * s.y +
+                  resizePoints.y +
+                  y -
+                  tempPoint.y}`
               )
               .join(", ");
             resizeEle.setAttributeNS(null, "points", points);
@@ -573,10 +573,10 @@ function initPaint(svgId, conf = null) {
               .map(
                 item =>
                   `${(item.x - resizePoints.x) * s.x +
-                    resizePoints.x +
-                    x -
-                    tempPoint.x} ${(item.y - resizePoints.y) * s.y +
-                    resizePoints.y}`
+                  resizePoints.x +
+                  x -
+                  tempPoint.x} ${(item.y - resizePoints.y) * s.y +
+                  resizePoints.y}`
               )
               .join(", ");
             resizeEle.setAttributeNS(null, "points", points);
@@ -669,10 +669,10 @@ function initPaint(svgId, conf = null) {
               .map(
                 item =>
                   `${(item.x - resizePoints.x) * s.x +
-                    resizePoints.x} ${(item.y - resizePoints.y) * s.y +
-                    resizePoints.y +
-                    y -
-                    tempPoint.y}`
+                  resizePoints.x} ${(item.y - resizePoints.y) * s.y +
+                  resizePoints.y +
+                  y -
+                  tempPoint.y}`
               )
               .join(", ");
             resizeEle.setAttributeNS(null, "points", points);
@@ -760,8 +760,8 @@ function initPaint(svgId, conf = null) {
               .map(
                 item =>
                   `${(item.x - resizePoints.x) * s.x +
-                    resizePoints.x} ${(item.y - resizePoints.y) * s.y +
-                    resizePoints.y}`
+                  resizePoints.x} ${(item.y - resizePoints.y) * s.y +
+                  resizePoints.y}`
               )
               .join(", ");
             resizeEle.setAttributeNS(null, "points", points);
@@ -1012,8 +1012,8 @@ function initPaint(svgId, conf = null) {
               type === "ro"
                 ? "alias"
                 : type === "tl" || type === "br"
-                ? "nwse-resize"
-                : "nesw-resize";
+                  ? "nwse-resize"
+                  : "nesw-resize";
             selectBoxC.append(selectBoxBtn);
           };
           addSelectBoxBtn(boxSizeList[i].x - 8, boxSizeList[i].y - 8, "tl");
@@ -1189,11 +1189,11 @@ function initPaint(svgId, conf = null) {
 
   document.querySelector("#svg-showsettings").addEventListener("click", e => {
     let settings = document.querySelector('.svg-settings');
-    if (settings.style.display==='none') {
-      settings.style.display=''
+    if (settings.style.display === 'none') {
+      settings.style.display = ''
       document.querySelector("#svg-showsettings").classList.add("active");
     } else {
-      settings.style.display='none'
+      settings.style.display = 'none'
       document.querySelector("#svg-showsettings").classList.remove("active");
     }
   });
@@ -1201,18 +1201,28 @@ function initPaint(svgId, conf = null) {
   document.querySelector("#svg-nextline").addEventListener("click", e => {
     document.querySelector('#text-change-nextline')?.onclick()
   });
-  (['change-stay','change-nextline']).forEach(s=>{
-    document.querySelector("#svg-"+s).addEventListener("click", e => {
+  (['change-stay', 'change-nextline']).forEach(s => {
+    document.querySelector("#svg-" + s).addEventListener("click", e => {
       let textarea = document.createElement("textarea");
-      let {x,y,width,height} = svg.getBBox();
+      let { x, y, width, height } = svg.getBBox();
       textarea.value = svg.outerHTML.replace('<svg id="svg">',
         `<svg id="svg" xmlns="http://www.w3.org/2000/svg" viewbox="${x - 10},${y - 10},${width + 20},${height + 20}" style="height:${height + 20}">`);
       document.querySelector("#images").append(textarea);
-      window?.drawAPI.unstable.setTextContent(textarea.value+'  ');
-      document.querySelector('#text-'+s)?.onclick()
+      window?.drawAPI.unstable.setTextContent(textarea.value + '  ');
+      document.querySelector('#text-' + s)?.onclick()
     });
   })
-  return {reInit};
+
+  document.querySelector("#svg-show-text").addEventListener("click", e => {
+    let text = document.querySelector('#svg-text');
+    if (text.style.display === 'none') {
+      text.style.display = ''
+    } else {
+      text.style.display = 'none'
+    }
+  });
+
+  return { reInit };
 }
 
 exports.initPaint = initPaint

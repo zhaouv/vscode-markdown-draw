@@ -15,7 +15,7 @@
 </head>
 
 <body>
-  <input type="text" value="current line">
+  <input id="svg-text" type="text" placeholder="current line" ; style="display: none">
   <div style="display: none;">
     <input type="button" value="nextline" id="text-nextline">
     <input type="button" value="stay-nextline" id="text-change-stay">
@@ -68,6 +68,9 @@
         <span class="svgiconspliter"></span>
         <div class="svg-operate">
           <div class="svg-btn fa fa-sliders-h" id="svg-showsettings" title="settings (unfinished now)">
+            <span></span>
+          </div>
+          <div class="svg-btn fa fa-code" id="svg-show-text" title="show svg text">
             <span></span>
           </div>
           <div class="svg-btn fa fa-reply" id="svg-undo" title="undo">
