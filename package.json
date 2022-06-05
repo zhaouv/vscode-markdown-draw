@@ -72,7 +72,7 @@
 					"type": "string",
 					"default": "",
 					"description": "Save SVG to directory; write SVG inline if blank"
-        },
+				},
 				"markdown-draw.webview-keybindings": {
 					"type": "array",
 					"default": [
@@ -131,11 +131,9 @@
 		}
 	},
 	"scripts": {},
-	"dependencies": {
-		"uuid": "^8.3.2"
-	},
+	"dependencies": {},
 	"devDependencies": {
-		"@types/node": "^12.12.0",
-		"@types/vscode": "^1.47.0"
+		"@types/vscode": "^1.47.0",
+		"@types/node": "^12.12.0"
 	}
 }

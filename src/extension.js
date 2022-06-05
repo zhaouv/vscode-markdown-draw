@@ -1,11 +1,8 @@
 const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
-const { v4: uuidv4 } = require('uuid');
 
-let settings = vscode.workspace.getConfiguration('markdown-draw');
-
-function getNonce() {
+function getRandomString() {
   let text = '';
   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   for (let i = 0; i < 32; i++) {
@@ -13,6 +10,8 @@ function getNonce() {
   }
   return text;
 }
+const getNonce = getRandomString;
+const generateSVGName = getRandomString;
 
 function loadWebviewFiles(root) {
   let main = fs.readFileSync(path.join(root, 'webview.html'), { encoding: 'utf8' })
@@ -74,8 +73,8 @@ function activate(context) {
           case 'editCurrentLine':
             setEditorText(message.text, message.control);
             return;
-          case 'readFile':
-            currentPanel.webview.postMessage({ command: 'readFile', content: readFile(message.file) });
+          case 'readSVGFile':
+            currentPanel.webview.postMessage({ command: 'readSVGFile', content: readFile(message.file) });
             return;
         }
       },
@@ -154,7 +153,8 @@ function activate(context) {
 
   // write text to filename
   function writeFile(text, filename) {
-    dir = path.join(vscode.workspace.rootPath, settings.directory);
+    let settings = vscode.workspace.getConfiguration('markdown-draw');
+    let dir = path.join(vscode.workspace.rootPath, settings.directory);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir);
     }
@@ -167,8 +167,9 @@ function activate(context) {
   }
 
   function setEditorText(text, control) {
+    let settings = vscode.workspace.getConfiguration('markdown-draw');
     if (settings.directory) {
-      let filename = `${uuidv4()}.svg`
+      let filename = `${generateSVGName()}.svg`
       let alt = "";
 
       // reuse existing alt and filename, if available

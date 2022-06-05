@@ -6,6 +6,7 @@ Shortcut bind of webview (reference: fork of [joseaeltala](https://github.com/jo
 
 Collapse svg input element and add toggle button [PR#4](https://github.com/zhaouv/vscode-markdown-draw/pull/4). Thanks [hall](https://github.com/hall).
 
+Allow storing svg in external file [PR#3](https://github.com/zhaouv/vscode-markdown-draw/pull/3). Thanks [hall](https://github.com/hall) again!
 
 
 ## 0.1.4 (2021-03-01)

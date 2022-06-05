@@ -24,6 +24,12 @@ const drawAPI = {
         command: 'editCurrentLine',
       });
     },
+    readSVGFileContent(file) {
+      console.log({
+        file,
+        command: 'readSVGFile',
+      })
+    },
     getSVGElement: () => svgElement,
     /**
      * 
@@ -80,12 +86,13 @@ const drawAPI = {
     setContent(content) {
       drawAPI.unstable.setTextContent(content)
       document.querySelector("#svg-clean")?.dispatchEvent(new Event('click'))
+      let match;
       // 不准确的检查, 先这么写
       if (content.startsWith('<svg id="svg"')) {
         drawAPI.unstable.setSVGContent(content)
       }
       else if (match = /!\[.*\]\((.*\.svg)\)/.exec(content)) {
-        drawAPI.unstable.readSVGContent(match[1])
+        drawAPI.unstable.readSVGFileContent(match[1])
       }
     },
     custom(content) {
@@ -144,7 +151,7 @@ window.addEventListener('message', event => {
     case 'custom':
       drawAPI.unstable.custom(message.content);
       break;
-    case 'readFile':
+    case 'readSVGFile':
       drawAPI.unstable.setSVGContent(message.content);
       break;
   }
@@ -180,10 +187,10 @@ document.onkeydown = drawAPI.unstable.ShortCuts;
         command: 'editCurrentLine',
       })
     }
-    drawAPI.unstable.readSVGContent = (file) => {
+    drawAPI.unstable.readSVGFileContent = (file) => {
       vscode.postMessage({
         file,
-        command: 'readFile',
+        command: 'readSVGFile',
       })
     }
     vscode.postMessage({ command: 'requestCurrentLine' })
