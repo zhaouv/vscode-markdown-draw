@@ -1206,7 +1206,7 @@ function initPaint(svgId, conf = null) {
       let textarea = document.createElement("textarea");
       let { x, y, width, height } = svg.getBBox();
       textarea.value = svg.outerHTML.replace('<svg id="svg">',
-        `<svg id="svg" viewbox="${x - 10},${y - 10},${width + 20},${height + 20}" style="height:${height + 20}">`);
+        `<svg id="svg" xmlns="http://www.w3.org/2000/svg" viewbox="${x - 10},${y - 10},${width + 20},${height + 20}" style="height:${height + 20}">`);
       document.querySelector("#images").append(textarea);
       window?.drawAPI.unstable.setTextContent(textarea.value + '  ');
       document.querySelector('#text-' + s)?.onclick()

@@ -1,6 +1,9 @@
 const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
+const { v4: uuidv4 } = require('uuid');
+
+let settings = vscode.workspace.getConfiguration('markdown-draw');
 
 function getNonce() {
   let text = '';
@@ -37,10 +40,11 @@ function activate(context) {
   /** @type {vscode.WebviewPanel | undefined} */
   let currentPanel = undefined;
 
-  // values for editting status
+  // values for editing status
   /** @type {vscode.TextEditor | undefined} */
   let currentEditor = undefined;
   let currentLine = 0;
+  let currentText = "";
   let updateHandle = undefined;
 
   function createNewPanel() {
@@ -69,6 +73,9 @@ function activate(context) {
             return;
           case 'editCurrentLine':
             setEditorText(message.text, message.control);
+            return;
+          case 'readFile':
+            currentPanel.webview.postMessage({ command: 'readFile', content: readFile(message.file) });
             return;
         }
       },
@@ -109,6 +116,7 @@ function activate(context) {
     currentLine_ = currentEditor_.selection.active.line
 
     let text = currentEditor_.document.getText(new vscode.Range(currentLine_, 0, currentLine_ + 1, 0))
+    currentText = text
     return { text, currentEditor_, currentLine_ }
   }
 
@@ -123,7 +131,7 @@ function activate(context) {
 
   let updateCheckStrings = ['', '']
   function resetCheckStrings(str) {
-    updateCheckStrings[0]=updateCheckStrings[1]=str
+    updateCheckStrings[0] = updateCheckStrings[1] = str
   }
   function realTimeCurrentEditorUpdate() {
     updateHandle = setInterval(() => {
@@ -144,8 +152,35 @@ function activate(context) {
     }, 100)
   }
 
+  // write text to filename
+  function writeFile(text, filename) {
+    dir = path.join(vscode.workspace.rootPath, settings.directory);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
+    fs.writeFileSync(path.join(dir, filename), text, { encoding: 'utf8' });
+  }
+
+  // return contents of filename
+  function readFile(filename) {
+    return fs.readFileSync(path.join(vscode.workspace.rootPath, filename), { encoding: 'utf8' });
+  }
+
   function setEditorText(text, control) {
-    console.log(text.slice(0, 30), control);
+    if (settings.directory) {
+      let filename = `${uuidv4()}.svg`
+      let alt = "";
+
+      // reuse existing alt and filename, if available
+      if (match = currentText.match(/!\[(.*)\]\((.*\.svg)\)/)) {
+        alt = match[1]
+        filename = match[2].replace(/^.*[\\\/]/, '')
+      }
+
+      writeFile(text, filename)
+      text = `![${alt}](${settings.directory}/${filename})`
+    }
+
     if (!currentEditor || currentEditor.document.isClosed) {
       vscode.window.showErrorMessage('The text editor has been closed');
       return;
@@ -157,7 +192,7 @@ function activate(context) {
       .then((editor) => editor.edit(edit => {
         let lf = '\n'
         edit.replace(new vscode.Range(currentLine, 0, currentLine + 1, 0), text + lf);
-        resetCheckStrings(text.split('\n')[0]+'\n')
+        resetCheckStrings(text.split('\n')[0] + '\n')
       }))
     if (control !== 0) {
       p = p
